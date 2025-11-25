@@ -1,0 +1,32 @@
+#reservations {
+  padding-top: 20px;
+  padding-left: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 20px;
+}
+#res-date {
+  margin-left: 10px;
+  width: 200px;
+  height: 40px;
+  font-size: 16px;
+}
+#res-time {
+  margin-left: 10px;
+  width: 200px;
+  height: 40px;
+  font-size: 16px;
+}
+
+#occasion {
+  margin-left: 65px;
+  width: 200px;
+  height: 40px;
+  font-size: 16px;
+}
+
+#submit {
+  margin-left: 100px;
+  width: 200px;
+}

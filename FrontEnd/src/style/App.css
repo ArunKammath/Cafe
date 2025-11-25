@@ -1,0 +1,176 @@
+#pageLayout {
+  background: lightcyan;
+}
+#navigation {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  button {
+    height: 30px;
+    width: 200px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  img {
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+  }
+}
+#heroSection {
+  padding-left: 200px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: left;
+  background: lightgreen;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 200px;
+  img {
+    height: 30%;
+    width: 30%;
+  }
+  button {
+    height: 40px;
+    width: 200px;
+    font-size: 20px;
+    border-radius: 5px;
+  }
+}
+#highlights {
+  padding-top: 10px;
+  padding-left: 10%;
+  padding-bottom: 10px;
+  header {
+    padding-left: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+    gap: 50%;
+    button {
+      height: 40px;
+      width: 150px;
+      font-size: 20px;
+      border-radius: 10px;
+      color: white;
+      background: black;
+    }
+  }
+  #specials {
+    padding-left: 10px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 100px;
+  }
+  background: lightyellow;
+}
+#testimonials {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background: lightsalmon;
+}
+#rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  gap: 5%;
+}
+#stars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  img {
+    height: 30px;
+    width: 30px;
+  }
+}
+#about {
+  padding: 20px;
+  text-align: center;
+  background: lightblue;
+}
+#footer {
+  padding-left: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+  img {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+#elanji {
+  padding-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    height: 130%;
+    width: 130%;
+    margin: 0%;
+  }
+  h1 {
+    font-size: 32px;
+    margin: 0%;
+  }
+  p {
+    margin: 0%;
+  }
+}
+
+#kaypola {
+  padding-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  img {
+    margin: 0%;
+    height: 130%;
+    width: 130%;
+  }
+  h1 {
+    font-size: 32px;
+    margin: 0%;
+  }
+  p {
+    margin: 0%;
+  }
+}
+
+#ullivada {
+  margin:0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  img {
+    margin: 0%;
+    height: 60%;
+    width: 60%;
+  }
+  h1 {
+    font-size: 32px;
+    margin: 0%;
+  }
+  p {
+    margin:0%;
+  }
+}

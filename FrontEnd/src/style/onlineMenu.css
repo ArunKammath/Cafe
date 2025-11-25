@@ -1,0 +1,131 @@
+#onlineMenu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5%;
+}
+
+#beverages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5%;
+
+}
+#beverageList {
+    display: flex;
+    flex-direction: row;
+    gap: 20%;
+}
+#tea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+}
+#coffee {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+    img {
+        width: 90%;
+        height: 90%;
+    }
+}
+
+#snacks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5%;
+}
+#snacksList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20%;
+}
+#elanji {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+}
+#kaypola {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+}
+#ullivada {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+    img {
+        width: 20vw;
+        height: 20vw;
+    }
+}
+
+#desserts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5%;
+}
+#dessertsList {
+    display: flex;
+    flex-direction: row;
+    gap: 30%;
+}
+#tenderCoconut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+    h1{
+        font-size: 2vw;
+    }
+    img {
+        width: 15vw;
+        height: 15vw;
+    }
+}
+#bananaHalwa {  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+    img {
+        width: 15vw;
+        height: 15vw;
+    }
+}    
+
+#quantity {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    input {
+        text-align: center;
+        width: 5vw;
+    }
+}
+
+#cart {
+    background-color: green;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1%;
+}
+#item {
+    display: flex;
+    padding-left: 1%;
+    flex-direction: row;
+    justify-content: left;
+    gap: 5%;
+}
