@@ -4,7 +4,7 @@ import { useBooking } from "./booking";
 import axios from "axios";
 
 function Reservations() {
-  const {bookingList, setBookingList} = useBooking();
+  //const {bookingList, setBookingList} = useBooking();
   
     const [booking, setBooking] = useState({
         date: "",
@@ -21,28 +21,13 @@ function Reservations() {
         });
        
     };
-    useEffect(() => {
-      if(booking.date !=="" && booking.time !== "" && booking.numGuests !== 0 && booking.occasion !== "") {
-        for(let i = 0; i < bookingList.length; i++) {
-          if(bookingList[i].date === booking.date && bookingList[i].time === booking.time) {
-            alert("No available slots for this time");
-            return;
-          }
-        }
-      }
-    }, [booking]);
-
-    useEffect(() => {
-      console.log(bookingList);
-    }, [bookingList]);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitted booking:", bookingList);
         const res = await axios.post("http://localhost:3000/reservations", booking);
-        console.log(res);
-        setBookingList([...bookingList, booking]);
+        if(res.data.valid===false) {
+          alert(res.data.message);
+        }
         // Reset form after submission
         setBooking({
             date: "",
