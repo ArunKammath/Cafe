@@ -1,6 +1,7 @@
 import "./style/App.css";
 import "./style/reservation.css"
 import "./style/onlineMenu.css"
+import "./style/registration.css"
 import { Routes, Route } from "react-router-dom";
 import {
   TopNav,
@@ -10,6 +11,8 @@ import {
 } from "./components/main";
 import { Reservations } from "./components/reservation";
 import { OrderOnline } from "./components/onlineMenu";
+import { Login } from "./components/login";
+import { Registration } from "./components/registration";
 function App() {
   return (
     <body id="pageLayout">
@@ -20,6 +23,8 @@ function App() {
         <Route path="/reservations" element={<Reservations />} />
         <Route path="/orderonline" element={<OrderOnline />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registration" element={<Registration />} />
       </Routes>
     </body>
   );

@@ -21,6 +21,11 @@ connection.connect(err => {
     if (err) throw err;
     console.log("result", result);
   });*/
+  /*let sql= 'create table users (username varchar(255), password varchar(255))';
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log("result", result);
+  });*/
   console.log('Connected to MySQL database');
 });
 

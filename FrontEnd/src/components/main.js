@@ -32,6 +32,9 @@ function TopNav() {
       <Link to="/contact">
         <button>Contact</button>
       </Link>
+      <Link to="/login">
+        <button>Login</button>
+      </Link>
       <Link to="/reservations">
         <button>Reservations</button>
       </Link>

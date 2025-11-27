@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../style/reservation.css"; 
-import { useBooking } from "./booking"; 
 import axios from "axios";
 
 function Reservations() {
-  //const {bookingList, setBookingList} = useBooking();
-  
     const [booking, setBooking] = useState({
         date: "",
         time: "",
