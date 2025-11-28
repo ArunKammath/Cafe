@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "../style/reservation.css"; 
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+
 
 function Reservations() {
+    const { userData } = useLocation().state || { userData: { username: "" } }
+
+    let loggedIn = userData.username !== "";
+    console.log(userData);
     const [booking, setBooking] = useState({
         date: "",
         time: "",
@@ -21,10 +27,9 @@ function Reservations() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.post("http://localhost:3000/reservations", booking);
-        if(res.data.valid===false) {
-          alert(res.data.message);
-        }
+        const res = await axios.post("http://localhost:3000/reservations", {booking, isLoggedIn: loggedIn});
+        console.log(res.data);
+        alert(res.data.message);
         // Reset form after submission
         setBooking({
             date: "",
@@ -36,6 +41,7 @@ function Reservations() {
 
   return (
     <form id="reservations" onSubmit={handleSubmit}>
+      <h1>Welcome {userData.username}</h1>
       <label htmlFor="res-date" style={{ fontSize: "20px"}}>Reservation date 
         <input type="date" id="res-date" name="date" value={booking.date} onChange={handleChange} />
       </label>
@@ -50,17 +56,26 @@ function Reservations() {
           <option value="22:00">22:00</option>
         </select>
       </label>
-      <label htmlFor="numGuests" style={{ fontSize: "20px"}}>Number of guests:
-        <input type="number" id="guests" name="numGuests" value={booking.numGuests} onInput={handleChange} min={0}/>
-      </label>
-      <label htmlFor="occasion" style={{ fontSize: "20px" }}>Occasion :  
-        <select id="occasion" name="occasion" value={booking.occasion} onChange={handleChange}>
-          <option value="">Select an occasion</option>
-          <option value="Birthday">Birthday</option>
-          <option value="Anniversary">Anniversary</option>
-        </select>
-      </label>
-      <input id="submit" type="submit" value="Make Your reservation" />  
+      {loggedIn && (
+        <React.Fragment>
+        <label htmlFor="numGuests" style={{ fontSize: "20px"}}>Number of guests:
+          <input type="number" id="guests" name="numGuests" value={booking.numGuests} onInput={handleChange} min={0}/>
+        </label>
+        <label htmlFor="occasion" style={{ fontSize: "20px" }}>Occasion :  
+          <select id="occasion" name="occasion" value={booking.occasion} onChange={handleChange}>
+            <option value="">Select an occasion</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Anniversary">Anniversary</option>
+          </select>
+        </label>
+        <input id="submit" type="submit" value="Make Your reservation" />   
+        </React.Fragment>
+      )}
+      {!loggedIn && (
+        <React.Fragment>
+          <input id="submit" type="submit" value="Check Availability" />
+        </React.Fragment>
+      )}
     </form>
   );
 }

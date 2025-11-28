@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function Login() {
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -16,13 +17,18 @@ function Login() {
         e.preventDefault();
         console.log("user", user);
         const res = await axios.post("http://localhost:3000/login", user);
-        if(res.data.valid===false) {
-          alert(res.data.message);
-        }
         setUser({
             username: "",
             password: "",
         });
+        if(res.data.valid===false) {
+          alert(res.data.message);
+        }
+        else {
+          console.log(res.data.message);
+          navigate("/reservations", {state: {userData :user}});
+        }
+        
     }
     return (
         <React.Fragment>

@@ -24,6 +24,8 @@ app.post('/login', (req, res) => {console.log("req.body", req.body);
         if(!isFound) {
             return res.json({valid: false, message: 'Username does not exists'});
         }
+        // Login successful - username found
+        return res.json({valid: true, message: 'Login successful'});
     });
 });
 app.post('/registration', (req, res) => {
@@ -67,7 +69,7 @@ app.post('/reservations', (req, res) => {
         for(let i = 0; i < bookingList.length; i++) {
             const bookingDate = bookingList[i].reservationDate; 
             const bookingTime = bookingList[i].reservationTime ? bookingList[i].reservationTime.toString().slice(0, 5) : bookingList[i].reservationTime;
-            if(bookingDate === req.body.date && bookingTime === req.body.time) {
+            if(bookingDate === req.body.booking.date && bookingTime === req.body.booking.time) {
                 isPresent = true;
                 break;
             }
@@ -79,21 +81,27 @@ app.post('/reservations', (req, res) => {
         }
         
         // Insert req.body into MySQL database
-        const insertSql = 'INSERT INTO reservations (reservationDate, reservationTime, numGuests, occasion) VALUES (?, ?, ?, ?)';
-        const values = [req.body.date, req.body.time, req.body.numGuests, req.body.occasion];
-        db.query(insertSql, values, (err, result) => {
-            if (err) {
-                console.error('Error inserting reservation:', err);
-                return res.status(500).json({message: 'Error saving reservation'});
-            }
-            res.status(201).json({
-              valid: true,
-              message: 'Reservation saved successfully',
+        if(req.body.isLoggedIn) {
+            const insertSql = 'INSERT INTO reservations (reservationDate, reservationTime, numGuests, occasion) VALUES (?, ?, ?, ?)';
+            const values = [req.body.booking.date, req.body.booking.time, req.body.booking.numGuests, req.body.booking.occasion];
+            db.query(insertSql, values, (err, result) => {
+                if (err) {
+                    console.error('Error inserting reservation:', err);
+                    return res.status(500).json({message: 'Error saving reservation'});
+                }
+                res.status(201).json({
+                valid: true,
+                message: 'Reservation saved successfully',
+                });
             });
-        });
+        }
+        else {
+            res.json({valid: true, message: "Available slots for this time"});
+        }
     });
 });
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
