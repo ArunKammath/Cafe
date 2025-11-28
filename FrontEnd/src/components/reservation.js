@@ -4,6 +4,32 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 
+function CheckAvailability() { 
+  return (
+    <React.Fragment>
+      <input id="submit" type="submit" value="Check Availability" />
+    </React.Fragment>
+  )
+}
+
+function ReservationForm({booking, handleChange}) {
+  return  (
+    <React.Fragment>
+    <label htmlFor="numGuests" style={{ fontSize: "20px"}}>Number of guests:
+      <input type="number" id="guests" name="numGuests" value={booking.numGuests} onInput={handleChange} min={0}/>
+    </label>
+    <label htmlFor="occasion" style={{ fontSize: "20px" }}>Occasion :  
+      <select id="occasion" name="occasion" value={booking.occasion} onChange={handleChange}>
+        <option value="">Select an occasion</option>
+        <option value="Birthday">Birthday</option>
+        <option value="Anniversary">Anniversary</option>
+      </select>
+    </label>
+    <input id="submit" type="submit" value="Make Your reservation" />   
+    </React.Fragment>
+  )
+}
+
 function Reservations() {
     const { userData } = useLocation().state || { userData: { username: "" } }
 
@@ -56,26 +82,8 @@ function Reservations() {
           <option value="22:00">22:00</option>
         </select>
       </label>
-      {loggedIn && (
-        <React.Fragment>
-        <label htmlFor="numGuests" style={{ fontSize: "20px"}}>Number of guests:
-          <input type="number" id="guests" name="numGuests" value={booking.numGuests} onInput={handleChange} min={0}/>
-        </label>
-        <label htmlFor="occasion" style={{ fontSize: "20px" }}>Occasion :  
-          <select id="occasion" name="occasion" value={booking.occasion} onChange={handleChange}>
-            <option value="">Select an occasion</option>
-            <option value="Birthday">Birthday</option>
-            <option value="Anniversary">Anniversary</option>
-          </select>
-        </label>
-        <input id="submit" type="submit" value="Make Your reservation" />   
-        </React.Fragment>
-      )}
-      {!loggedIn && (
-        <React.Fragment>
-          <input id="submit" type="submit" value="Check Availability" />
-        </React.Fragment>
-      )}
+      {loggedIn && <ReservationForm booking={booking} handleChange={handleChange}/>}
+      {!loggedIn && <CheckAvailability />}
     </form>
   );
 }
