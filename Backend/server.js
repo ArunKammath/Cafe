@@ -8,7 +8,7 @@ app.use(express.json()); // Parse JSON request bodies
 const PORT = 3000;
 
 app.post('/login', (req, res) => {console.log("req.body", req.body);
-    const checkSql = 'SELECT username FROM users ';
+    const checkSql = 'SELECT username, password FROM users ';
     db.query(checkSql, (err, userList) => {
         if (err) {
             console.error('Error checking users:', err);
@@ -16,13 +16,13 @@ app.post('/login', (req, res) => {console.log("req.body", req.body);
         }
         let isFound=false;
         for(let i = 0; i < userList.length; i++) {
-            if(userList[i].username === req.body.username) {
+            if(userList[i].username === req.body.username && userList[i].password === req.body.password) {
                 isFound=true;
                 break;
             }
         }
         if(!isFound) {
-            return res.json({valid: false, message: 'Username does not exists'});
+            return res.json({valid: false, message: 'Username or password is incorrect'});
         }
         // Login successful - username found
         return res.json({valid: true, message: 'Login successful'});
