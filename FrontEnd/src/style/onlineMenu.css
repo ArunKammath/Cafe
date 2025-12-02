@@ -51,12 +51,20 @@
     flex-direction: column;
     align-items: center;
     gap: 2%;
+    img {
+        width:20vw;
+        height:20vw
+    }
 }
 #kaypola {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2%;
+    gap: 2%;    
+    img {
+        width: 20vw;
+        height: 20vw;
+    }
 }
 #ullivada {
     display: flex;

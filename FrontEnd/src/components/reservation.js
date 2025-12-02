@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../style/reservation.css"; 
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 
 function CheckAvailability() { 
@@ -31,9 +31,9 @@ function ReservationForm({booking, handleChange}) {
 }
 
 function Reservations() {
-    const { userData } = useLocation().state || { userData: { username: "" } }
+    const { userData } = useLocation().state || { userData: { username: "Login to reserve" } }
 
-    let loggedIn = userData.username !== "";
+    let loggedIn = userData.username !== "Login to reserve";
     console.log(userData);
     const [booking, setBooking] = useState({
         date: "",
@@ -66,25 +66,40 @@ function Reservations() {
     };
 
   return (
-    <form id="reservations" onSubmit={handleSubmit}>
-      <h1>Welcome {userData.username}</h1>
-      <label htmlFor="res-date" style={{ fontSize: "20px"}}>Reservation date 
-        <input type="date" id="res-date" name="date" value={booking.date} onChange={handleChange} />
-      </label>
-        <label htmlFor="res-time" style={{ fontSize: "20px" }}>Reservation time 
-        <select id="res-time" name="time" value={booking.time} onChange={handleChange}>
-          <option value="">Select a time</option>
-          <option value="17:00">17:00</option>
-          <option value="18:00">18:00</option>
-          <option value="19:00">19:00</option>
-          <option value="20:00">20:00</option>
-          <option value="21:00">21:00</option>
-          <option value="22:00">22:00</option>
-        </select>
-      </label>
-      {loggedIn && <ReservationForm booking={booking} handleChange={handleChange}/>}
-      {!loggedIn && <CheckAvailability />}
-    </form>
+    <React.Fragment>
+    <section id="reservations">
+        <section id="righttab">
+          <div >
+            <h1>Welcome !!</h1>
+            <h1>{userData.username}</h1>
+          </div>
+          {loggedIn && (<Link to="/reservationlist">
+            My Reservations
+          </Link>)}
+          {loggedIn && (<Link to="/orderonline" state={{ userData }}>
+            Order Online
+          </Link>)}
+        </section>
+        <form id="reservationForm" onSubmit={handleSubmit}>
+          <label htmlFor="res-date" style={{ fontSize: "20px"}}>Reservation date 
+            <input type="date" id="res-date" name="date" value={booking.date} onChange={handleChange} />
+          </label>
+            <label htmlFor="res-time" style={{ fontSize: "20px" }}>Reservation time 
+            <select id="res-time" name="time" value={booking.time} onChange={handleChange}>
+              <option value="">Select a time</option>
+              <option value="17:00">17:00</option>
+              <option value="18:00">18:00</option>
+              <option value="19:00">19:00</option>
+              <option value="20:00">20:00</option>
+              <option value="21:00">21:00</option>
+              <option value="22:00">22:00</option>
+            </select>
+          </label>
+          {loggedIn && <ReservationForm booking={booking} handleChange={handleChange}/>}
+          {!loggedIn && <CheckAvailability />}
+        </form>
+    </section>
+    </React.Fragment>
   );
 }
 export { Reservations };

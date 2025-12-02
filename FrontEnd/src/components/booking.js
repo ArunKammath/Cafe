@@ -1,12 +1,12 @@
 import { createContext, useState, useContext } from "react";
 
-const bookingContext = createContext(undefined);
+const loginContext = createContext(undefined);
 
-export const BookingProvider = ({ children }) => {
-    const [bookingList, setBookingList] = useState([]);
+export const LoginProvider = ({ children }) => {
+    const [loginData, setLoginData] = useState({isLoggedIn: false, username: "", password: ""});
 
-    return (<bookingContext.Provider value={{bookingList, setBookingList}}>
+    return (<loginContext.Provider value={{loginData, setLoginData}}>
         {children}
-    </bookingContext.Provider>)
+    </loginContext.Provider>)
 }
-export const useBooking = () =>  useContext(bookingContext);
+export const useLogin = () =>  useContext(loginContext);
