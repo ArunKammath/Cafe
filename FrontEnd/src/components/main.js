@@ -6,6 +6,7 @@ import ullivada from "../images/ullivada.webp";
 import star from "../images/star.png";
 import { Link } from "react-router-dom";
 import React from "react";
+import { useLogin } from "./booking";
 
 function HomePage() {
   return (
@@ -18,11 +19,12 @@ function HomePage() {
     </React.Fragment>
   );
 }
-
-function TopNav() {
-  return (
-    <nav id="navigation">
-      <img src={logo} alt="logo" />
+function GeneralTopNav() {
+  const { loginData } = useLogin();
+  let loggedIn = loginData.isLoggedIn;
+  if(!loggedIn) {
+    return (
+      <React.Fragment>
       <Link to="/">
         <button>Home</button>
       </Link>
@@ -35,11 +37,21 @@ function TopNav() {
       <Link to="/login">
         <button>Login</button>
       </Link>
+      </React.Fragment>
+    )
+  }
+}
+function TopNav() {
+  
+  return (
+    <nav id="navigation">
+      <img src={logo} alt="logo" />
+      <GeneralTopNav />
       <Link to="/reservations">
         <button>Reservations</button>
       </Link>
       <Link to="/orderonline">
-        <button>Order online</button>
+        <button>Orders</button>
       </Link>
     </nav>
   );

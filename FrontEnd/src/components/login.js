@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useLogin } from "./booking";
 function Login() {
     const navigate = useNavigate();
     const [user, setUser] = useState({
         username: "",
         password: "",
     });
+    const {loginData, setLoginData} = useLogin();
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -26,7 +28,8 @@ function Login() {
         }
         else {
           console.log(res.data.message);
-          navigate("/reservations", {state: {userData :user}});
+          setLoginData({...loginData, isLoggedIn: true, username: user.username, password: user.password});
+          navigate("/reservations");
         }
         
     }

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../style/reservation.css"; 
 import axios from "axios";
-import { useLocation, Link } from "react-router-dom";
-
+import { useLogin } from "./booking";
+import { RightTabLogin } from "./rightTabLogin";
 
 function CheckAvailability() { 
   return (
@@ -31,10 +31,8 @@ function ReservationForm({booking, handleChange}) {
 }
 
 function Reservations() {
-    const { userData } = useLocation().state || { userData: { username: "Login to reserve" } }
-
-    let loggedIn = userData.username !== "Login to reserve";
-    console.log(userData);
+   const { loginData } = useLogin();
+    let loggedIn = loginData.isLoggedIn;
     const [booking, setBooking] = useState({
         date: "",
         time: "",
@@ -68,18 +66,7 @@ function Reservations() {
   return (
     <React.Fragment>
     <section id="reservations">
-        <section id="righttab">
-          <div >
-            <h1>Welcome !!</h1>
-            <h1>{userData.username}</h1>
-          </div>
-          {loggedIn && (<Link to="/reservationlist">
-            My Reservations
-          </Link>)}
-          {loggedIn && (<Link to="/orderonline" state={{ userData }}>
-            Order Online
-          </Link>)}
-        </section>
+        <RightTabLogin />
         <form id="reservationForm" onSubmit={handleSubmit}>
           <label htmlFor="res-date" style={{ fontSize: "20px"}}>Reservation date 
             <input type="date" id="res-date" name="date" value={booking.date} onChange={handleChange} />

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 import tea from "../images/tea.webp";
 import coffee from "../images/coffee.avif";
 import Elanji from "../images/Elanji.jpeg";
@@ -7,6 +6,8 @@ import kaypola from "../images/kaypola.jpeg";
 import ullivada from "../images/ullivada.webp";
 import tenderCoconut from "../images/tenderCoconut.jpg";
 import bananaHalwa from "../images/bananaHalwa.jpg";
+import { useLogin } from "./booking";
+import { RightTabLogin } from "./rightTabLogin";
 
 
 function QuantityButton(props){
@@ -45,8 +46,8 @@ function Cart({items}) {
     }
 }
 function OrderOnline() {
-    const { userData } = useLocation().state || { userData: { username: "Login to place order" } };
-    let loggedIn = userData.username !== "Login to place order";
+    const { loginData } = useLogin();
+    let loggedIn = loginData.isLoggedIn;
     const [items, setQuantity] = useState({
         tea: 0,
         coffee: 0,
@@ -67,6 +68,8 @@ function OrderOnline() {
     }
     return (
         <React.Fragment>
+        <section id="onlineOrder">
+            <RightTabLogin />
             <section id="onlineMenu">
                 <section id="Menu ">
                     <section id="beverages">
@@ -135,6 +138,7 @@ function OrderOnline() {
                 </section>
                 <Cart items={items} />
             </section>
+        </section>
         </React.Fragment>
     );
   }
