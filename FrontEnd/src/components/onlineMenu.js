@@ -9,29 +9,9 @@ import bananaHalwa from "../images/bananaHalwa.jpg";
 import { useLogin } from "./booking";
 import { RightTabLogin } from "./rightTabLogin";
 import Card from "./card";
+import "../style/cart.css";
+import Cart from "./cart";
 
-
-function Cart({items}) {
-    if(items.total > 0) {
-        let itemList = [];
-        for(let item in items) {
-            if(items[item] > 0) {
-                itemList.push(item);
-            }
-        }
-        return (
-            <section id="cart">
-                <h1>Cart</h1>
-                {itemList.map((item) => (
-                    <section id="item">
-                        <h2>{item}</h2>
-                        <h2>{items[item]}</h2>
-                    </section>
-                ))}
-            </section>
-        )
-    }
-}
 function OrderOnline() {
     const { loginData } = useLogin();
     let loggedIn = loginData.isLoggedIn;
@@ -92,7 +72,7 @@ function OrderOnline() {
                         </section>
                     </section>
                 </section>
-                <Cart items={itemCount} />
+                <Cart items={items} />
             </section>
         </section>
         </React.Fragment>
