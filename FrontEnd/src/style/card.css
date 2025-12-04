@@ -1,4 +1,4 @@
-#card {
+#menuCard {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,12 +11,12 @@
     margin: 0.52vw;
 }
 
-#card:hover {
+#menuCard:hover {
     transform: translateY(-0.46vh);
     box-shadow: 0 0.31vw 0.63vw rgba(0, 0, 0, 0.15);
 }
 
-#card img {
+#menuCard img {
     width: 100%;
     height: 50%;
     object-fit: cover;
@@ -24,21 +24,21 @@
     border: 0.05vw solid #ddd;
 }
 
-#card h2 {
+#menuCard h2 {
     margin: 0;
     font-size: 1.5em;
     text-align: center;
     color: #333;
 }
 
-#card h3 {
+#menuCard h3 {
     margin: 0;
     font-size: 1.2em;
     color: #666;
     font-weight: bold;
 }
 
-#card button {
+#menuCard button {
     padding: 0.74vh 0.83vw;
     border: 0.05vw solid #333;
     border-radius: 0.21vw;
@@ -48,12 +48,12 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-#card button:hover {
+#menuCard button:hover {
     background-color: #333;
     color: #fff;
 }
 
-#card input[type="number"] {
+#menuCard input[type="number"] {
     width: 3.13vw;
     padding: 0.74vh;
     border: 0.05vw solid #333;
@@ -62,3 +62,17 @@
     font-size: 0.73vw;
 }
 
+#card {
+    padding: 2vh 2vw;
+    width: 20vw;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1vw;
+    box-shadow: 0 0.3vw 1vw rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  }

@@ -8,7 +8,7 @@ import tenderCoconut from "../images/tenderCoconut.jpg";
 import bananaHalwa from "../images/bananaHalwa.jpg";
 import { useLogin } from "./booking";
 import { RightTabLogin } from "./rightTabLogin";
-import Card from "./card";
+import { MenuCard } from "./card";
 import "../style/cart.css";
 import Cart from "./cart";
 
@@ -48,8 +48,8 @@ function OrderOnline() {
                             <h1>Beverages</h1>
                         </header>
                         <section id="beverageList">
-                                <Card image={tea} name="tea" items={items} />
-                                <Card image={coffee} name="coffee" items={items} />
+                                <MenuCard image={tea} name="tea" items={items} />
+                                <MenuCard image={coffee} name="coffee" items={items} />
                         </section>
                     </section>
                     <section id="snacks">
@@ -57,9 +57,9 @@ function OrderOnline() {
                             <h1>Snacks</h1>
                         </header>
                         <section id="snacksList">
-                            <Card image={Elanji} name="elanji" items={items} />
-                            <Card image={kaypola} name="kaypola" items={items} />
-                            <Card image={ullivada} name="ullivada" items={items} />
+                            <MenuCard image={Elanji} name="elanji" items={items} />
+                            <MenuCard image={kaypola} name="kaypola" items={items} />
+                            <MenuCard image={ullivada} name="ullivada" items={items} />
                         </section>
                     </section>
                     <section id="desserts">
@@ -67,8 +67,8 @@ function OrderOnline() {
                             <h1>Desserts</h1>
                         </header>
                         <section id="dessertsList">
-                            <Card image={tenderCoconut} name="tenderCoconut" items={items} />
-                            <Card image={bananaHalwa} name="bananaHalwa" items={items} />
+                            <MenuCard image={tenderCoconut} name="tenderCoconut" items={items} />
+                            <MenuCard image={bananaHalwa} name="bananaHalwa" items={items} />
                         </section>
                     </section>
                 </section>

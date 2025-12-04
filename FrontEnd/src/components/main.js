@@ -7,6 +7,7 @@ import star from "../images/star.png";
 import { Link } from "react-router-dom";
 import React from "react";
 import { useLogin } from "./booking";
+import {  Card } from "./card";
 
 function HomePage() {
   return (
@@ -84,21 +85,9 @@ function Main() {
         </Link>
       </header>
       <section id="specials">
-        <section id="elanji">
-          <img src={Elanji} alt="Elanji" />
-          <h1>Elanji</h1>
-          <p>A mix of grated coconut and dryfruits!</p>
-        </section>
-        <section id="kaypola">
-          <img src={kaypola} alt="Kaypola" />
-          <h1>Kaypola</h1>
-          <p>Fruits in an Egg cake!</p>
-        </section>
-        <section id="ullivada">
-          <img src={ullivada} alt="Ullivada" />
-          <h1>Ullivada</h1>
-          <p>Onion with batter deep fried!</p>
-        </section>
+        <Card name="Elanji" description="A mix of grated coconut and dryfruits!" image={Elanji} />
+        <Card name="Kaypola" description="Fruits in an Egg cake!" image={kaypola} />
+        <Card name="Ullivada" description="Onion with batter deep fried!" image={ullivada} />
       </section>
     </main>
   );

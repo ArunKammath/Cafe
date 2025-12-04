@@ -2,7 +2,7 @@
 import "../style/card.css";
 import React from "react";
 
-function Card(props)
+function MenuCard(props)
 {
     const items = props.items;
     const itemPrice = items.itemPrice;
@@ -20,7 +20,7 @@ function Card(props)
     }
 
     return (
-        <section id="card">
+        <section id="menuCard">
             <img src={props.image} alt={props.name} />
             <h2>{props.name}</h2>
             <h3>Rs. {itemPrice[props.name]}</h3>
@@ -34,4 +34,15 @@ function Card(props)
         </section>
     )
 }   
-export default Card;
+
+function Card(props)
+{
+    return (
+        <section id="card">
+            <img src={props.image} alt={props.name} />
+            <h1>{props.name}</h1>
+            <p>{props.description}</p>
+        </section>
+    )
+}
+export { MenuCard, Card };  
