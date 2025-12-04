@@ -72,8 +72,8 @@ function OrderOnline() {
                         </section>
                     </section>
                 </section>
-                <Cart items={items} />
             </section>
+            <Cart items={items} />
         </section>
         </React.Fragment>
     );
