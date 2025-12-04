@@ -13,6 +13,7 @@ import { Reservations } from "./components/reservation";
 import { OrderOnline } from "./components/onlineMenu";
 import { Login } from "./components/login";
 import { Registration } from "./components/registration";
+import ReservationList from "./components/reservationList";
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +27,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/ReservationList" element={<ReservationList />} />
         </Routes>
       </body>
     </BrowserRouter>

@@ -19,7 +19,7 @@ function RightTabLogin() {
             <h1>Welcome !!</h1>
             <h1>{loginData.username}</h1>
           </div>
-          <Link id="myReservations" to="/reservationlist">
+          <Link id="myReservations" to="/ReservationList">
             My Reservations
           </Link>
           <Link id="orders" to="/orders">

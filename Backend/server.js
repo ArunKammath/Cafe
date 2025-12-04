@@ -28,6 +28,19 @@ app.post('/login', (req, res) => {console.log("req.body", req.body);
         return res.json({valid: true, message: 'Login successful'});
     });
 });
+
+app.post('/reserveList', (req, res) => {
+    console.log("req.body", req.body);
+    const checkSql = 'SELECT * FROM reservations';
+    db.query(checkSql, (err, result) => {
+        if (err) {
+            console.error('Error checking reservations:', err);
+            return res.status(500).json({message: 'Error checking reservations'});
+        }
+        return res.json({ reservations: result});
+    });
+});
+
 app.post('/registration', (req, res) => {
     console.log("req.body", req.body);
     const checkSql = 'SELECT username FROM users ';
