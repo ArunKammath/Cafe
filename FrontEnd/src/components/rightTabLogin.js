@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useLogin } from "./booking";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../style/rightTabLogin.css";
 function RightTabLogin() {
   const { loginData, setLoginData } = useLogin();
   let loggedIn = loginData.isLoggedIn;
@@ -18,13 +19,13 @@ function RightTabLogin() {
             <h1>Welcome !!</h1>
             <h1>{loginData.username}</h1>
           </div>
-          <Link to="/reservationlist">
+          <Link id="myReservations" to="/reservationlist">
             My Reservations
           </Link>
-          <Link to="/orders">
-            Orders
+          <Link id="orders" to="/orders">
+            My Orders
           </Link>
-          <button onClick={handleLogout}>Logout</button>
+          <button id="logout" onClick={handleLogout}>Logout</button>
         </section>
       )}
     </React.Fragment>

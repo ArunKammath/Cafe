@@ -1,0 +1,85 @@
+#righttab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+    max-width: 300px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+#righttab > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    width: 100%;
+}
+
+#righttab h1 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #333;
+    text-align: center;
+}
+
+#righttab h1:first-child {
+    font-size: 1.1em;
+    color: #666;
+    font-weight: normal;
+}
+
+#righttab h1:last-child {
+    font-size: 1.5em;
+    color: #333;
+    font-weight: bold;
+}
+
+#righttab #myReservations, #righttab #orders {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+#righttab a:hover {
+    background-color: #333;
+    color: white;
+    border-color: #333;
+}
+
+#righttab button {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #d32f2f;
+    border-radius: 4px;
+    background-color: white;
+    color: #d32f2f;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#righttab button:hover {
+    background-color: #d32f2f;
+    color: white;
+}
+

@@ -8,22 +8,9 @@ import tenderCoconut from "../images/tenderCoconut.jpg";
 import bananaHalwa from "../images/bananaHalwa.jpg";
 import { useLogin } from "./booking";
 import { RightTabLogin } from "./rightTabLogin";
+import Card from "./card";
 
 
-function QuantityButton(props){
-    return (
-        <React.Fragment >
-            {props.loggedIn && (
-            <section id="quantity">
-                <button onClick={() => props.handleAdd(props.item)}>Add</button>
-                <input type="number" placeholder="Quantity" value={props.quantity}/>
-                <button onClick={() => props.handleRemove(props.item)}>Remove</button>
-            </section>
-            )}
-        </React.Fragment>
-        
-    )
-}
 function Cart({items}) {
     if(items.total > 0) {
         let itemList = [];
@@ -48,7 +35,16 @@ function Cart({items}) {
 function OrderOnline() {
     const { loginData } = useLogin();
     let loggedIn = loginData.isLoggedIn;
-    const [items, setQuantity] = useState({
+    const itemPrice = {
+        tea: 15,
+        coffee: 20,
+        elanji: 30,
+        kaypola: 40,
+        ullivada: 50,
+        tenderCoconut: 40,
+        bananaHalwa: 50
+    }
+    const [itemCount, setItemCount] = useState({
         tea: 0,
         coffee: 0,
         elanji: 0,
@@ -58,37 +54,22 @@ function OrderOnline() {
         bananaHalwa: 0,
         total: 0
     });
-    const handleAdd = (item) => {
-        setQuantity({...items,  [item]: items[item] + 1, total: items.total + 1});
-    }
-    const handleRemove = (item) => {
-        if(items[item] > 0){
-            setQuantity({...items, [item]: items[item] - 1, total: items.total - 1});
-        }
-    }
+
+    const items = {itemCount: itemCount, setItemCount: setItemCount, itemPrice: itemPrice, loggedIn: loggedIn};
+
     return (
         <React.Fragment>
         <section id="onlineOrder">
             <RightTabLogin />
             <section id="onlineMenu">
-                <section id="Menu ">
+                <section id="menu ">
                     <section id="beverages">
                         <header>
                             <h1>Beverages</h1>
                         </header>
                         <section id="beverageList">
-                            <section id="tea">
-                                <h1>Tea</h1>
-                                <img src={tea} alt="tea" />
-                                <h2>Rs. 15.00 </h2>
-                                <QuantityButton loggedIn={loggedIn} handleAdd={handleAdd} handleRemove={handleRemove} quantity={items.tea} item="tea" />
-                            </section>
-                            <section id="coffee">   
-                                <h1>Coffee</h1>
-                                <img src={coffee} alt="coffee" />
-                                <h2>Rs. 20.00 </h2>
-                                <QuantityButton loggedIn={loggedIn} handleAdd={handleAdd} handleRemove={handleRemove} quantity={items.coffee} item="coffee" />
-                        </section>
+                                <Card image={tea} name="tea" items={items} />
+                                <Card image={coffee} name="coffee" items={items} />
                         </section>
                     </section>
                     <section id="snacks">
@@ -96,47 +77,22 @@ function OrderOnline() {
                             <h1>Snacks</h1>
                         </header>
                         <section id="snacksList">
-                            <section id="elanji">
-                                <h1>Elanji</h1>
-                                <img src={Elanji} alt="elanji" />
-                                <h2>Rs. 30.00 </h2>
-                                <QuantityButton loggedIn={loggedIn} handleAdd={handleAdd} handleRemove={handleRemove} quantity={items.elanji} item="elanji" />
-                            </section>
-                            <section id="kaypola">
-                                <h1>Kaypola</h1>
-                                <img src={kaypola} alt="kaypola" />
-                                <h2>Rs. 40.00 </h2>
-                                <QuantityButton loggedIn={loggedIn} handleAdd={handleAdd} handleRemove={handleRemove} quantity={items.kaypola} item="kaypola" />
-                            </section>
-                            <section id="ullivada">
-                                <h1>Ullivada</h1>
-                                <img src={ullivada} alt="ullivada" />
-                                <h2>Rs. 50.00 </h2>
-                                <QuantityButton loggedIn={loggedIn} handleAdd={handleAdd} handleRemove={handleRemove} quantity={items.ullivada} item="ullivada" />
-                            </section>
+                            <Card image={Elanji} name="elanji" items={items} />
+                            <Card image={kaypola} name="kaypola" items={items} />
+                            <Card image={ullivada} name="ullivada" items={items} />
                         </section>
                     </section>
                     <section id="desserts">
-                        <header>
+                        <header> 
                             <h1>Desserts</h1>
                         </header>
                         <section id="dessertsList">
-                            <section id="tenderCoconut">
-                                <h1>Tender Coconut Pudding</h1>
-                                <img src={tenderCoconut} alt="tenderCoconut" />
-                                <h2>Rs. 40.00 </h2>
-                                <QuantityButton loggedIn={loggedIn} handleAdd={handleAdd} handleRemove={handleRemove} quantity={items.tenderCoconut} item="tenderCoconut" />
-                            </section>
-                            <section id="bananaHalwa">
-                                <h1>Banana Halwa</h1>
-                                <img src={bananaHalwa} alt="bananaHalwa" />
-                                <h2>Rs. 50.00 </h2> 
-                                <QuantityButton loggedIn={loggedIn} handleAdd={handleAdd} handleRemove={handleRemove} quantity={items.bananaHalwa} item="bananaHalwa" />
-                            </section>
+                            <Card image={tenderCoconut} name="tenderCoconut" items={items} />
+                            <Card image={bananaHalwa} name="bananaHalwa" items={items} />
                         </section>
                     </section>
                 </section>
-                <Cart items={items} />
+                <Cart items={itemCount} />
             </section>
         </section>
         </React.Fragment>

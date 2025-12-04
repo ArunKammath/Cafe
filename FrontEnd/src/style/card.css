@@ -1,0 +1,64 @@
+#card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4vh;
+    padding: 1.85vh 1.04vw;
+    border: 0.1vw solid black;
+    border-radius: 0.42vw;
+    background-color: white;
+    max-width: 15.63vw;
+    margin: 0.52vw;
+}
+
+#card:hover {
+    transform: translateY(-0.46vh);
+    box-shadow: 0 0.31vw 0.63vw rgba(0, 0, 0, 0.15);
+}
+
+#card img {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 0.21vw;
+    border: 0.05vw solid #ddd;
+}
+
+#card h2 {
+    margin: 0;
+    font-size: 1.5em;
+    text-align: center;
+    color: #333;
+}
+
+#card h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #666;
+    font-weight: bold;
+}
+
+#card button {
+    padding: 0.74vh 0.83vw;
+    border: 0.05vw solid #333;
+    border-radius: 0.21vw;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 0.73vw;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#card button:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+#card input[type="number"] {
+    width: 3.13vw;
+    padding: 0.74vh;
+    border: 0.05vw solid #333;
+    border-radius: 0.21vw;
+    text-align: center;
+    font-size: 0.73vw;
+}
+
