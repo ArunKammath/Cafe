@@ -130,19 +130,22 @@ function Testimonials() {
 }
 
 function About() {
-  const [columnDefs, setColumnDefs] = useState([
-    {    field: "name" },
-    {    field: "age" },
-    {    field: "email" },
-    ]);
-  const rowData = useState([
-    { name: "John Doe", age: 25, email: "john.doe@example.com" },
-  ]);
   return (
-    <div className="ag-theme-quartz" style={{ height: 400, width: 600 }} id="about">
+    <header id="about">
       <h1>About Us</h1>
-      <AgGridReact columnDefs={columnDefs} rowData={rowData} />
-    </div>
+      <p>
+        Started in 2020 by a group of friends who were passionate about kerala
+        spices and flavours
+      </p>
+      <p>
+        We use the fresh ingredients and the best quality products to make our
+        food
+      </p>
+      <p>
+        With 50 tea varieties and 100 snacks, we are sure to have something for
+        everyone
+      </p>
+    </header>
   );
 }
 
