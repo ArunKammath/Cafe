@@ -114,6 +114,19 @@ app.post('/reservations', (req, res) => {
     });
 });
 
+app.post('/ReservationList', (req, res) => {    
+    console.log("req.body", req.body);
+    const checkSql = 'DELETE FROM reservations WHERE reservationDate = ? AND reservationTime = ?';
+    const values = [req.body.reservationDate, req.body.reservationTime];
+    db.query(checkSql, values, (err, result) => {
+        if (err) {
+            console.error('Error deleting reservation:', err);
+            return res.status(500).json({message: 'Error deleting reservation'});
+        }
+        return res.json({message: 'Reservation deleted successfully'});
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
