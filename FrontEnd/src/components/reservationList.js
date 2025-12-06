@@ -8,6 +8,8 @@ import { ModuleRegistry } from "ag-grid-community";
 import { AllCommunityModule } from "ag-grid-community";
 import { RightTabLogin } from "./rightTabLogin";
 import "../style/reservationList.css";
+import { useMemo } from "react";
+
 ModuleRegistry.registerModules([
   AllCommunityModule
 ]);
@@ -27,19 +29,23 @@ function ReservationList() {
         }
         fetchReservations();
     }, []);
-    console.log(reservations);
+    const defaultColDef = useMemo(() => ({
+        flex: 1
+    }), []);
+
     const [columnDefs, setColumnDefs] = useState([
-        { field: "reservationDate" },
-        { field: "reservationTime" },
-        { field: "numGuests" },
-        { field: "occasion" },
+        { field: "reservationDate", headerName: "Reservation Date" },   
+        { field: "reservationTime", headerName: "Reservation Time" },
+        { field: "numGuests", headerName: "Number of Guests" },
+        { field: "occasion", headerName: "Occasion" },
     ]);
     return (
         <React.Fragment>
             <section id="reservationList">
                 <RightTabLogin />
                 <div className="ag-theme-quartz" >
-                    <AgGridReact columnDefs={columnDefs} rowData={reservations} />
+                    <AgGridReact columnDefs={columnDefs} rowData={reservations} defaultColDef={defaultColDef}
+                    pagination={true} paginationPageSize={10} />
                 </div>
             </section>
         </React.Fragment>

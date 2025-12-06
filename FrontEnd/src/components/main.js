@@ -8,11 +8,8 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { useLogin } from "./booking";
 import {  Card } from "./card";
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-quartz.css";
-import { useState } from "react";
-function HomePage() {
+
+  function HomePage() {
   return (
     <React.Fragment>
       <HeroSection />
