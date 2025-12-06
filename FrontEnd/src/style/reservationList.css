@@ -1,0 +1,13 @@
+#reservationList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+   
+    gap: 5vw;
+    padding: 3vh 3vw;
+}
+.ag-theme-quartz {
+    height: 40vh;
+    width: 50vw;
+}
+

@@ -1,6 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../style/reservationDetails.css";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
+import { ModuleRegistry } from "ag-grid-community";
+import { AllCommunityModule } from "ag-grid-community";
+import { RightTabLogin } from "./rightTabLogin";
+import "../style/reservationList.css";
+ModuleRegistry.registerModules([
+  AllCommunityModule
+]);
 
 function ReservationList() {
     const [reservations, setReservations] = useState([]);
@@ -18,23 +28,20 @@ function ReservationList() {
         fetchReservations();
     }, []);
     console.log(reservations);
+    const [columnDefs, setColumnDefs] = useState([
+        { field: "reservationDate" },
+        { field: "reservationTime" },
+        { field: "numGuests" },
+        { field: "occasion" },
+    ]);
     return (
         <React.Fragment>
-            <h1>Reservation List</h1>
-            <ul>
-                {reservations && reservations.length > 0 ? (
-                    reservations.map((reservation, index) => (
-                            <section id="reservation-details">
-                                <h3>Date: {reservation.reservationDate}</h3>
-                                <h3>Time: {reservation.reservationTime}</h3>
-                                <h3>Guests: {reservation.numGuests}</h3>
-                                <h3>Occasion: {reservation.occasion }</h3>
-                            </section>
-                    ))
-                ) : (
-                    <li>No reservations found</li>
-                )}
-            </ul>
+            <section id="reservationList">
+                <RightTabLogin />
+                <div className="ag-theme-quartz" >
+                    <AgGridReact columnDefs={columnDefs} rowData={reservations} />
+                </div>
+            </section>
         </React.Fragment>
     );
 }
