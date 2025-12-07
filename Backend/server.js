@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const db = require('./db'); // Import database connection
+const db = require('./db'); // Import MySQL database connection
+const Order = require('./db/mongoDb'); // Import MongoDB connection and Order model
 
 app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
@@ -159,7 +160,15 @@ app.post('/ReservationList', (req, res) => {
     });
 });
 
+app.post('/orders', async (req, res) => {
+    console.log("req.body", req.body);
+    const newOrder = await Order.insertOne({orderList: req.body});
+    console.log("newOrder", newOrder);
+    res.json({message: 'Order saved successfully'});
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
 

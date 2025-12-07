@@ -1,12 +1,36 @@
 import "../style/cart.css";
+import axios from "axios";
 function Cart({items}) {
 
     const itemCount = items.itemCount;
     const itemPrice = items.itemPrice;
     const setItemCount = items.setItemCount;
-    let amount=0.00;
-    const handlePlaceOrder = () => {
+   
+    const handlePlaceOrder = async () => {
+        let toatlAmount=0.00;
         console.log("Placed Order");
+        if(itemCount.total ===0) {
+            alert("No items in the cart");
+            return;
+        }
+       const orderList = [];
+       Object.keys(itemCount).forEach(item => {
+        if(item!=="total" && itemCount[item] > 0) {
+            let amount = Number(itemCount[item])*Number(itemPrice[item]);
+            toatlAmount += amount;
+            orderList.push({
+                    item: item,
+                    amount: amount
+                })
+            }
+       });
+       orderList.push({
+        item: "total",
+        amount: toatlAmount
+       });
+       console.log(orderList);
+        const res=await axios.post('http://localhost:3000/orders', orderList);
+        console.log(res);
         setItemCount({
             tea: 0,
             coffee: 0,
@@ -18,6 +42,7 @@ function Cart({items}) {
             total: 0
         });
     }
+    let amount=0.00;
     if(itemCount.total > 0) {
         let itemList = [];
         for(let item in itemCount) {
