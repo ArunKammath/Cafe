@@ -8,7 +8,7 @@ function RightTabLogin() {
   let loggedIn = loginData.isLoggedIn;
   const navigate = useNavigate();
   const handleLogout = () => {
-    setLoginData({...loginData, isLoggedIn: false, username: "", password: ""});  
+    setLoginData({...loginData, isLoggedIn: false, username: "", password: "", userId: ""});  
     navigate("/");
   }
   return (

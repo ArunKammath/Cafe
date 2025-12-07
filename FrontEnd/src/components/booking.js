@@ -3,7 +3,7 @@ import { createContext, useState, useContext } from "react";
 const loginContext = createContext(undefined);
 
 export const LoginProvider = ({ children }) => {
-    const [loginData, setLoginData] = useState({isLoggedIn: false, username: "", password: ""});
+    const [loginData, setLoginData] = useState({isLoggedIn: false, username: "", password: "", userId: ""});
 
     return (<loginContext.Provider value={{loginData, setLoginData}}>
         {children}

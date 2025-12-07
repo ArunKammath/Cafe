@@ -17,7 +17,6 @@ function Login() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("user", user);
         const res = await axios.post("http://localhost:3000/login", user);
         setUser({
             username: "",
@@ -28,7 +27,10 @@ function Login() {
         }
         else {
           console.log(res.data.message);
-          setLoginData({...loginData, isLoggedIn: true, username: user.username, password: user.password});
+          console.log("userId", res.data.userId);
+          
+          setLoginData({...loginData, isLoggedIn: true, username: user.username, password: user.password, userId: res.data.userId});
+          console.log(loginData)
           navigate("/reservations");
         }
         

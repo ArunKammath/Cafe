@@ -16,12 +16,12 @@ const connection = mysql.createConnection({
 // executing connection
 connection.connect(err => {
   if (err) throw err;
-  /*let sql= 'create table reservations (reservationDate DATE, reservationTime TIME, numGuests INT, occasion varchar(255))';
+  /*let sql= 'create table reservations (userId varchar(255), reservationId varchar(255), reservationDate DATE, reservationTime TIME, numGuests INT, occasion varchar(255))';
   connection.query(sql, (err, result) => {
     if (err) throw err;
     console.log("result", result);
   });*/
-  /*let sql= 'create table users (username varchar(255), password varchar(255))';
+  /*  let sql= 'create table users (userId varchar(255), username varchar(255), password varchar(255))';
   connection.query(sql, (err, result) => {
     if (err) throw err;
     console.log("result", result);

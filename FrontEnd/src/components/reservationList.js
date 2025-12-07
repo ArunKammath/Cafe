@@ -8,7 +8,7 @@ import { ModuleRegistry } from "ag-grid-community";
 import { AllCommunityModule } from "ag-grid-community";
 import { RightTabLogin } from "./rightTabLogin";
 import "../style/reservationList.css";
-
+import { useLogin } from "./booking";
 
 ModuleRegistry.registerModules([
   AllCommunityModule
@@ -16,12 +16,13 @@ ModuleRegistry.registerModules([
 
 function ReservationList() {
     const [reservations, setReservations] = useState([]);
+    const { loginData } = useLogin();
     const gridRef = useRef(null);
 
     useEffect(() => {
         async function fetchReservations() {
             try {
-                const res = await axios.post("http://localhost:3000/reserveList");
+                const res = await axios.post("http://localhost:3000/reserveList", {userId: loginData.userId});
                 console.log(res.data);
                 setReservations(res.data.reservations);
             } catch (error) {
@@ -29,12 +30,14 @@ function ReservationList() {
             }
         }
         fetchReservations();
-    }, []);
+    }, [loginData.userId]);
     const defaultColDef = useMemo(() => ({
         flex: 1
     }), []);
 
+    console.log(reservations);
     const [columnDefs] = useState([
+        { field: "reservationId", headerName: "Reservation ID"},
         { field: "reservationDate", headerName: "Reservation Date" },   
         { field: "reservationTime", headerName: "Reservation Time" },
         { field: "numGuests", headerName: "Number of Guests" },
