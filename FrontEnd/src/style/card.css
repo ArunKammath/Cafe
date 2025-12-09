@@ -2,50 +2,57 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.4vh;
-    padding: 1.85vh 1.04vw;
-    border: 0.1vw solid black;
-    border-radius: 0.42vw;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 8px;
     background-color: white;
-    max-width: 15.63vw;
-    margin: 0.52vw;
+    max-width: 250px;
+    min-width: 200px;
+    margin: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #menuCard:hover {
-    transform: translateY(-0.46vh);
-    box-shadow: 0 0.31vw 0.63vw rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 #menuCard img {
     width: 100%;
-    height: 50%;
+    height: auto;
+    min-height: 150px;
+    max-height: 200px;
     object-fit: cover;
-    border-radius: 0.21vw;
-    border: 0.05vw solid #ddd;
+    border-radius: 4px;
+    border: 1px solid #ddd;
 }
 
 #menuCard h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1.25rem;
     text-align: center;
     color: #333;
 }
 
 #menuCard h3 {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1rem;
     color: #666;
     font-weight: bold;
 }
 
 #menuCard button {
-    padding: 0.74vh 0.83vw;
-    border: 0.05vw solid #333;
-    border-radius: 0.21vw;
+    padding: 0.5rem 1rem;
+    border: 1px solid #333;
+    border-radius: 4px;
     background-color: #fff;
     cursor: pointer;
-    font-size: 0.73vw;
+    font-size: 0.875rem;
     transition: background-color 0.2s, color 0.2s;
+    width: 100%;
 }
 
 #menuCard button:hover {
@@ -54,25 +61,83 @@
 }
 
 #menuCard input[type="number"] {
-    width: 3.13vw;
-    padding: 0.74vh;
-    border: 0.05vw solid #333;
-    border-radius: 0.21vw;
+    width: 60px;
+    min-width: 60px;
+    padding: 0.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
     text-align: center;
-    font-size: 0.73vw;
+    font-size: 0.875rem;
 }
 
 #card {
-    padding: 2vh 2vw;
-    width: 20vw;
-    height: 40vh;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 300px;
+    min-width: 250px;
+    height: auto;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1vh;
+    gap: 0.75rem;
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 1vw;
-    box-shadow: 0 0.3vw 1vw rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
 
-  }
+/* Tablet styles (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    #menuCard {
+        max-width: 220px;
+        min-width: 180px;
+    }
+
+    #card {
+        max-width: 280px;
+        min-width: 220px;
+    }
+}
+
+/* Mobile styles (up to 768px) */
+@media screen and (max-width: 768px) {
+    #menuCard {
+        max-width: 100%;
+        min-width: 180px;
+        width: 100%;
+    }
+
+    #card {
+        max-width: 100%;
+        min-width: 200px;
+        width: 100%;
+    }
+
+    #menuCard h2 {
+        font-size: 1.1rem;
+    }
+
+    #menuCard h3 {
+        font-size: 0.9rem;
+    }
+}
+
+/* Small mobile styles (up to 480px) */
+@media screen and (max-width: 480px) {
+    #menuCard {
+        padding: 0.75rem;
+        margin: 0.25rem;
+    }
+
+    #menuCard input[type="number"] {
+        width: 50px;
+        min-width: 50px;
+    }
+
+    #card {
+        padding: 1rem;
+        min-width: 180px;
+    }
+}

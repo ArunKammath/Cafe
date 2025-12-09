@@ -3,29 +3,32 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5vh;
+    gap: 2rem;
     min-height: 100vh;
-    padding: 5vh 3vw;
+    padding: 2rem 1rem;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    box-sizing: border-box;
 }
 
 #loginForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5vh;
-    padding: 4vh 4vw;
+    gap: 1.5rem;
+    padding: 2rem;
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 1vw;
-    box-shadow: 0 0.5vw 1.5vw rgba(0, 0, 0, 0.1);
-    min-width: 30vw;
-    max-width: 40vw;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    min-width: 280px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 #loginForm:hover {
-    transform: translateY(-0.2vh);
-    box-shadow: 0 0.7vw 2vw rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 #registration {
@@ -33,47 +36,50 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3vh;
+    gap: 1.5rem;
     min-height: 100vh;
-    padding: 5vh 3vw;
+    padding: 2rem 1rem;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    box-sizing: border-box;
 }
 
 #registration h1 {
-    font-size: 3.5vw;
+    font-size: 2rem;
     color: #333;
     font-weight: 600;
     margin: 0;
     text-align: center;
     letter-spacing: 0.05em;
-    text-shadow: 0 0.1vw 0.2vw rgba(0, 0, 0, 0.1);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #registrationForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5vh;
-    padding: 4vh 4vw;
+    gap: 1.5rem;
+    padding: 2rem;
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 1vw;
-    box-shadow: 0 0.5vw 1.5vw rgba(0, 0, 0, 0.1);
-    min-width: 30vw;
-    max-width: 40vw;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    min-width: 280px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 #registrationForm:hover {
-    transform: translateY(-0.2vh);
-    box-shadow: 0 0.7vw 2vw rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 #registrationForm label {
     display: flex;
     flex-direction: column;
-    gap: 0.8vh;
+    gap: 0.5rem;
     width: 100%;
-    font-size: 1.3vw;
+    font-size: 1rem;
     font-weight: 500;
     color: #333;
 }
@@ -83,16 +89,17 @@
 #loginForm input[type="text"],
 #loginForm input[type="password"] {
     width: 100%;
-    min-width: 15vw;
-    height: 5vh;
-    padding: 1vh 1.2vw;
-    font-size: 1.1vw;
-    border: 0.2vh solid #667eea;
-    border-radius: 0.5vw;
+    height: auto;
+    min-height: 45px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #667eea;
+    border-radius: 8px;
     background-color: white;
     color: #333;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 #registrationForm input[type="text"]:focus,
@@ -101,7 +108,7 @@
 #loginForm input[type="password"]:focus {
     outline: none;
     border-color: #764ba2;
-    box-shadow: 0 0 0 0.3vw rgba(102, 126, 234, 0.2);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 #registrationForm input[type="text"]:hover,
@@ -114,32 +121,99 @@
 #registrationForm button,
 #loginForm button {
     width: 100%;
-    min-width: 15vw;
-    height: 5.5vh;
-    margin-top: 1vh;
-    padding: 1.2vh 2vw;
-    font-size: 1.2vw;
+    height: auto;
+    min-height: 50px;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
     font-weight: 600;
     color: white;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
-    border-radius: 0.5vw;
+    border-radius: 8px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    box-shadow: 0 0.3vw 0.8vw rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
 }
 
 #registrationForm button:hover,
 #loginForm button:hover {
-    transform: translateY(-0.2vh);
-    box-shadow: 0 0.5vw 1.2vw rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
 }
 
 #registrationForm button:active,
 #loginForm button:active {
     transform: translateY(0);
-    box-shadow: 0 0.2vw 0.5vw rgba(102, 126, 234, 0.3);
+    box-shadow: 0 2px 5px rgba(102, 126, 234, 0.3);
 }
 
+/* Tablet styles (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    #registration h1 {
+        font-size: 1.75rem;
+    }
+
+    #registrationForm,
+    #loginForm {
+        max-width: 400px;
+        padding: 1.75rem;
+    }
+}
+
+/* Mobile styles (up to 768px) */
+@media screen and (max-width: 768px) {
+    #login,
+    #registration {
+        padding: 1.5rem 0.75rem;
+    }
+
+    #registration h1 {
+        font-size: 1.5rem;
+    }
+
+    #registrationForm,
+    #loginForm {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+
+    #registrationForm label,
+    #loginForm label {
+        font-size: 0.95rem;
+    }
+}
+
+/* Small mobile styles (up to 480px) */
+@media screen and (max-width: 480px) {
+    #login,
+    #registration {
+        padding: 1rem 0.5rem;
+        gap: 1rem;
+    }
+
+    #registration h1 {
+        font-size: 1.25rem;
+    }
+
+    #registrationForm,
+    #loginForm {
+        padding: 1.25rem;
+    }
+
+    #registrationForm input[type="text"],
+    #registrationForm input[type="password"],
+    #loginForm input[type="text"],
+    #loginForm input[type="password"] {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.875rem;
+    }
+
+    #registrationForm button,
+    #loginForm button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.25rem;
+    }
+}
