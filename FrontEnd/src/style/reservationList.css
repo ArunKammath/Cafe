@@ -1,29 +1,167 @@
-#reservationList {
-    display: grid;
-    grid-template-rows: 1fr 5fr ;
-    gap: 2vw;
-    padding: 3vh 3vw;
-}
-
 #myReservations {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    gap: 5vw;
-    padding: 3vh 3vw;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+#reservationList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.ag-theme-quartz {
+    height: 25rem;
+    width: 40rem;
+    font-size: 0.9rem;
+}
+
+/* AG Grid font size adjustments */
+.ag-theme-quartz .ag-header-cell-text,
+.ag-theme-quartz .ag-cell {
+    font-size: 0.9rem;
+}
+
+.ag-theme-quartz .ag-header-cell {
+    font-size: 1rem;
 }
 
 #cancelReservation {
-    width: 10vw;
-    height: 5vh;
-    margin-top: 2vh;
-    margin-left: auto;
-    justify-self: end;
-    padding: 1vh 1vw;
-    background-color: red;
-    color: black;
-    font-size: 1vw;
-    border-radius: 5px;
+    width: 100%;
+    min-width: 140px;
+    height: auto;
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+    background-color: #dc3545;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+#cancelReservation:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
+}
+
+#cancelReservation:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Tablet styles (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    #myReservations {
+        gap: 1.25rem;
+        padding: 1.25rem;
+    }
+
+    #reservationList {
+        padding: 1.25rem;
+        gap: 1rem;
+    }
+
+    .ag-theme-quartz {
+        height: 25rem;
+        width:25rem;
+        font-size: 0.85rem;
+    }
+
+    .ag-theme-quartz .ag-header-cell-text,
+    .ag-theme-quartz .ag-cell {
+        font-size: 0.85rem;
+    }
+
+    .ag-theme-quartz .ag-header-cell {
+        font-size: 0.95rem;
+    }
+
+    #cancelReservation {
+        font-size: 0.95rem;
+        padding: 0.7rem 1.1rem;
+        min-width: 120px;
+    }
+}
+
+/* Mobile styles (up to 768px) */
+@media screen and (max-width: 768px) {
+    #myReservations {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    #reservationList {
+        padding: 1rem;
+        gap: 0.9rem;
+    }
+
+    .ag-theme-quartz {
+        height: 25rem;
+        width: 100%;
+        font-size: 0.85rem;
+    }
+
+    .ag-theme-quartz .ag-header-cell-text,
+    .ag-theme-quartz .ag-cell {
+        font-size: 0.85rem;
+    }
+
+    .ag-theme-quartz .ag-header-cell {
+        font-size: 0.85rem;
+    }
+
+    #cancelReservation {
+        width: 100%;
+        min-width: unset;
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+        margin-left: 0;
+        align-self: stretch;
+    }
+}
+
+/* Small mobile styles (up to 480px) */
+@media screen and (max-width: 480px) {
+    #myReservations {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    #reservationList {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .ag-theme-quartz {
+        height: 15rem;
+        width: 100%;
+        font-size: 0.6rem;
+    }
+
+    .ag-theme-quartz .ag-header-cell-text,
+    .ag-theme-quartz .ag-cell {
+        font-size: 0.6rem;
+    }
+
+    .ag-theme-quartz .ag-header-cell {
+        font-size: 0.6rem;
+    }
+
+    #cancelReservation {
+        font-size: 0.9rem;
+        padding: 0.65rem 0.9rem;
+    }
 }

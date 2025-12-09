@@ -40,7 +40,7 @@ function ReservationList() {
         { field: "reservationId", headerName: "Reservation ID"},
         { field: "reservationDate", headerName: "Reservation Date" },   
         { field: "reservationTime", headerName: "Reservation Time" },
-        { field: "numGuests", headerName: "Number of Guests" },
+        { field: "numGuests", headerName: "Number", flex:0.5 },
         { field: "occasion", headerName: "Occasion" },
     ]);
     const handleDelete = async () => {
@@ -57,7 +57,6 @@ function ReservationList() {
             <section id="myReservations">
                 <RightTabLogin />
                 <section id="reservationList">  
-                    <button id="cancelReservation" onClick={handleDelete}>Cancel</button>
                     <div className="ag-theme-quartz" >
                         <AgGridReact 
                         ref={gridRef}
@@ -67,6 +66,7 @@ function ReservationList() {
                         rowSelection={'single'}
                         pagination={true} paginationPageSize={10} />
                     </div>
+                    <button id="cancelReservation" onClick={handleDelete}>Cancel</button>
                 </section>
             </section>
         </React.Fragment>
