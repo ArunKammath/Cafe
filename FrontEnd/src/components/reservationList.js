@@ -54,19 +54,20 @@ function ReservationList() {
     }
     return (
         <React.Fragment>
-            <section id="reservationList">
+            <section id="myReservations">
                 <RightTabLogin />
-                <button id="cancelReservation" onClick={handleDelete}>Cancel</button>
-                <div className="ag-theme-quartz" >
-                    <AgGridReact 
-                    ref={gridRef}
-                    columnDefs={columnDefs} 
-                    rowData={reservations} 
-                    defaultColDef={defaultColDef}
-                    rowSelection={'single'}
-                    pagination={true} paginationPageSize={10} />
-                </div>
-
+                <section id="reservationList">  
+                    <button id="cancelReservation" onClick={handleDelete}>Cancel</button>
+                    <div className="ag-theme-quartz" >
+                        <AgGridReact 
+                        ref={gridRef}
+                        columnDefs={columnDefs} 
+                        rowData={reservations} 
+                        defaultColDef={defaultColDef}
+                        rowSelection={'single'}
+                        pagination={true} paginationPageSize={10} />
+                    </div>
+                </section>
             </section>
         </React.Fragment>
     );

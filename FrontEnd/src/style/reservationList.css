@@ -1,20 +1,25 @@
 #reservationList {
+    display: grid;
+    grid-template-rows: 1fr 5fr ;
+    gap: 2vw;
+    padding: 3vh 3vw;
+}
+
+#myReservations {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: flex-start;
     gap: 5vw;
     padding: 3vh 3vw;
-}
-.ag-theme-quartz {
-    height: 45vh;
-    width: 50vw;
 }
 
 #cancelReservation {
     width: 10vw;
     height: 5vh;
     margin-top: 2vh;
-    margin-left: 2vw;
+    margin-left: auto;
+    justify-self: end;
     padding: 1vh 1vw;
     background-color: red;
     color: black;
