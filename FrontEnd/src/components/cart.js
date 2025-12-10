@@ -30,6 +30,7 @@ function Cart({items}) {
        });
        console.log(orderList);
         const res=await axios.post('http://localhost:3000/orders', orderList);
+        alert("Order placed successfully");
         console.log(res);
         setItemCount({
             tea: 0,
