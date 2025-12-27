@@ -45,4 +45,22 @@ function Card(props)
         </section>
     )
 }
-export { MenuCard, Card };  
+
+function OrderCard(props)
+{
+    console.log("props.items", props.orderList);
+    const items = props.orderList;
+    return(
+        <section className="orderCard">
+            {items.map(item => {
+                return (
+                    <section className="orderItem" >
+                        <h3>{item.item}</h3>
+                        <h4>Rs. {item.amount}</h4>
+                    </section>
+                )
+            })}
+        </section>  
+    )
+}
+export { MenuCard, Card, OrderCard };  
