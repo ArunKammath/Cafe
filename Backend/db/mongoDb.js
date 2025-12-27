@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const OrdersSchema = new mongoose.Schema({
+    userId: {
+        type: String
+    },
     orderList: {
         type: Array
     }

@@ -22,7 +22,7 @@ function RightTabLogin() {
           <Link id="myReservations" to="/ReservationList">
             My Reservations
           </Link>
-          <Link id="orders" to="/orders">
+          <Link id="orders" to="/OrderList">
             My Orders
           </Link>
           <button id="logout" onClick={handleLogout}>Logout</button>

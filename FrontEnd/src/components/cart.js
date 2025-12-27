@@ -1,7 +1,8 @@
 import "../style/cart.css";
 import axios from "axios";
+import { useLogin } from "./booking";
 function Cart({items}) {
-
+    const { loginData } = useLogin();       
     const itemCount = items.itemCount;
     const itemPrice = items.itemPrice;
     const setItemCount = items.setItemCount;
@@ -29,7 +30,7 @@ function Cart({items}) {
         amount: toatlAmount
        });
        console.log(orderList);
-        const res=await axios.post('http://localhost:3000/orders', orderList);
+        const res=await axios.post('http://localhost:3000/orders',{userId: loginData.userId, orderList: orderList});
         alert("Order placed successfully");
         console.log(res);
         setItemCount({

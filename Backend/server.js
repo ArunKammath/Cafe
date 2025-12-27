@@ -160,12 +160,21 @@ app.post('/ReservationList', (req, res) => {
     });
 });
 
+app.post('/orderList', async (req, res) => {
+    console.log("req.body", req.body);
+    const orderList = await Order.find({userId: req.body.userId});
+    console.log("orderList", orderList);
+    res.json({orders: orderList});
+});
+
 app.post('/orders', async (req, res) => {
     console.log("req.body", req.body);
-    const newOrder = await Order.insertOne({orderList: req.body});
+    const newOrder = await Order.insertOne({userId: req.body.userId, orderList: req.body.orderList});
     console.log("newOrder", newOrder);
     res.json({message: 'Order saved successfully'});
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

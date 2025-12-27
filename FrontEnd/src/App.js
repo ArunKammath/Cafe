@@ -14,6 +14,7 @@ import { OrderOnline } from "./components/onlineMenu";
 import { Login } from "./components/login";
 import { Registration } from "./components/registration";
 import ReservationList from "./components/reservationList";
+import OrderList from "./components/OrderList";
 function App() {
   return (
     <BrowserRouter>
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/ReservationList" element={<ReservationList />} />
+          <Route path="/OrderList" element={<OrderList />} />
         </Routes>
       </body>
     </BrowserRouter>
