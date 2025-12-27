@@ -21,10 +21,10 @@ function OrderList() {
         <React.Fragment>
             <section className="myOrders">
                 <RightTabLogin />
-                <section id="orderList">
-                    {orders.map(order => {
+                <section className="orderList">
+                    {orders.map((order, index) => {
                             return (
-                                <OrderCard orderList={order.orderList} />
+                                <OrderCard orderList={order.orderList} orderNo={index} />
                             )
                         })}
                 </section>

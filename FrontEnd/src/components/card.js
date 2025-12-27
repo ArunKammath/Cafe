@@ -50,17 +50,19 @@ function OrderCard(props)
 {
     console.log("props.items", props.orderList);
     const items = props.orderList;
+    const orderNo = props.orderNo;
     return(
         <section className="orderCard">
-            {items.map(item => {
+            <h1>Order No.{orderNo+1}</h1>
+            {items.map((item, index) => {
                 return (
-                    <section className="orderItem" >
+                    <section className="orderItem" key={index}>
                         <h3>{item.item}</h3>
                         <h4>Rs. {item.amount}</h4>
                     </section>
-                )
+                );
             })}
-        </section>  
-    )
+    </section>
+  );
 }
-export { MenuCard, Card, OrderCard };  
+export { MenuCard, Card, OrderCard };
