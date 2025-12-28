@@ -26,11 +26,8 @@ function Login() {
           alert(res.data.message);
         }
         else {
-          console.log(res.data.message);
-          console.log("userId", res.data.userId);
-          
-          setLoginData({...loginData, isLoggedIn: true, username: user.username, password: user.password, userId: res.data.userId});
-          console.log(loginData)
+          setLoginData({...loginData, isLoggedIn: true, username: user.username,
+             password: user.password, userId: res.data.userId, token: res.data.token});
           navigate("/reservations");
         }
         

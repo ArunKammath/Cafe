@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../style/reservation.css"; 
 import axios from "axios";
 import { useLogin } from "./booking";
@@ -33,12 +33,33 @@ function ReservationForm({booking, handleChange}) {
 function Reservations() {
    const { loginData } = useLogin();
     let loggedIn = loginData.isLoggedIn;
+    let token = loginData.token;
     const [booking, setBooking] = useState({
         date: "",
         time: "",
         numGuests:0,
         occasion: ""
     });
+
+    useEffect(() => {
+      const fetchLoginData = async () => {
+          if (!token) {
+            console.log('No token available');
+            return;
+          }
+          try {
+            const res = await axios.get('http://localhost:3000/reservations', {
+              headers: {
+                'Authorization': 'Bearer ' + token
+              }
+            });
+            console.log(res.data);
+          } catch (error) {
+            console.error('Error fetching reservations:', error);
+          }
+        }
+        fetchLoginData();
+  }, [loginData.token])
 
     const handleChange = (e) => {
       const value = e.target.name === "numGuests" ? Number(e.target.value) : e.target.value;

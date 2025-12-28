@@ -1,12 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const db = require('./db'); // Import MySQL database connection
 const Order = require('./db/mongoDb'); // Import MongoDB connection and Order model
+const jwt = require('jsonwebtoken');
 
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
-const PORT = 3000;
+
 
 function UniqueIdGenerator(type) {
     let num = Math.floor(1000 + Math.random() * 9000);
@@ -19,11 +22,35 @@ function UniqueIdGenerator(type) {
     return 'INVALID';
 }
 
-app.post('/login', (req, res) => {console.log("req.body", req.body);
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    console.log("authHeader", authHeader);
+    const token = authHeader && authHeader.split(' ')[1]
+  
+    if (!token) {
+      console.log('No token provided');
+      return res.sendStatus(401);
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not defined in environment variables');
+      return res.status(500).json({message: 'Server configuration error'});
+    }
+  
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        console.error('Error verifying token:', err.message);
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    });
+  }
+
+app.post('/login', (req, res) => {
     const checkSql = 'SELECT username, password, userId FROM users ';
     db.query(checkSql, (err, userList) => {
         if (err) {
-            console.error('Error checking users:', err);
             return res.status(500).json({message: 'Error checking users'});
         }
         let isFound=false;
@@ -38,30 +65,21 @@ app.post('/login', (req, res) => {console.log("req.body", req.body);
         if(!isFound) {
             return res.json({valid: false, message: 'Username or password is incorrect'});
         }
+        const token = jwt.sign(
+            { userId: userId, username: req.body.username , password: req.body.password},
+            process.env.JWT_SECRET,
+            { expiresIn: '15m' }
+          )
         // Login successful - username found
-        return res.json({valid: true, message: 'Login successful', userId: userId});
+        return res.json({valid: true, message: 'Login successful', userId: userId, token: token});
     });
 });
 
-app.post('/reserveList', (req, res) => {
-    console.log("req.body", req.body);
-    const checkSql = 'SELECT * FROM reservations WHERE userId = ?';
-    const values = [req.body.userId];
-    db.query(checkSql, values, (err, result) => {
-        if (err) {
-            console.error('Error checking reservations:', err);
-            return res.status(500).json({message: 'Error checking reservations'});
-        }
-        return res.json({ reservations: result});
-    });
-});
 
 app.post('/registration', (req, res) => {
-    console.log("req.body", req.body);
     const checkSql = 'SELECT username FROM users ';
     db.query(checkSql, (err, userList) => {
         if (err) {
-            console.error('Error checking users:', err);
             return res.status(500).json({message: 'Error checking users'});
         }
         for(let i = 0; i < userList.length; i++) {
@@ -83,7 +101,6 @@ app.post('/registration', (req, res) => {
         const values = [userId, req.body.username, req.body.password];
         db.query(insertSql, values, (err, result) => {
             if (err) {
-                console.error('Error inserting user:', err);
                 return res.status(500).json({message: 'Error inserting user'});
             }
             return res.json({valid: true, message: 'User registered successfully'});
@@ -92,12 +109,14 @@ app.post('/registration', (req, res) => {
 
 });
 
-app.post('/reservations', (req, res) => {
-    console.log("req.body", req.body);
+app.get('/reservations',authenticateToken, (req, res) => {
+    return res;
+})
+
+app.post('/reservations',(req, res) => {
     const checkSql = 'SELECT * FROM reservations';
     db.query(checkSql, (err, result) => {
         if (err) {
-            console.error('Error checking reservations:', err);
             return res.status(500).json({message: 'Error checking reservations'});
         }
         const bookingList = result;
@@ -132,7 +151,6 @@ app.post('/reservations', (req, res) => {
             const values = [req.body.booking.userId, reservationId, req.body.booking.date, req.body.booking.time, req.body.booking.numGuests, req.body.booking.occasion];
             db.query(insertSql, values, (err, result) => {
                 if (err) {
-                    console.error('Error inserting reservation:', err);
                     return res.status(500).json({message: 'Error saving reservation'});
                 }
                 res.status(201).json({
@@ -148,12 +166,10 @@ app.post('/reservations', (req, res) => {
 });
 
 app.post('/ReservationList', (req, res) => {    
-    console.log("req.body", req.body);
     const checkSql = 'DELETE FROM reservations WHERE reservationDate = ? AND reservationTime = ?';
     const values = [req.body.reservationDate, req.body.reservationTime];
     db.query(checkSql, values, (err, result) => {
         if (err) {
-            console.error('Error deleting reservation:', err);
             return res.status(500).json({message: 'Error deleting reservation'});
         }
         return res.json({message: 'Reservation deleted successfully'});
@@ -161,14 +177,11 @@ app.post('/ReservationList', (req, res) => {
 });
 
 app.post('/orderList', async (req, res) => {
-    console.log("req.body", req.body);
     const orderList = await Order.find({userId: req.body.userId});
-    console.log("orderList", orderList);
     res.json({orders: orderList});
 });
 
 app.post('/orders', async (req, res) => {
-    console.log("req.body", req.body);
     const newOrder = await Order.insertOne({userId: req.body.userId, orderList: req.body.orderList});
     console.log("newOrder", newOrder);
     res.json({message: 'Order saved successfully'});
@@ -176,7 +189,7 @@ app.post('/orders', async (req, res) => {
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, () => {    
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
