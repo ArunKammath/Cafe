@@ -2,12 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const db = require('./db'); // Import MySQL database connection
 const Order = require('./db/mongoDb'); // Import MongoDB connection and Order model
 const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5000'],
+    credentials: true
+}));
+app.use(cookieParser());
 app.use(express.json()); // Parse JSON request bodies
 
 
@@ -23,26 +28,23 @@ function UniqueIdGenerator(type) {
 }
 
 function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization']
-    console.log("authHeader", authHeader);
-    const token = authHeader && authHeader.split(' ')[1]
-  
+    const token = req.cookies?.accessToken;
     if (!token) {
-      console.log('No token provided');
-      return res.sendStatus(401);
-    }
-
-    if (!process.env.JWT_SECRET) {
-      console.error('JWT_SECRET is not defined in environment variables');
-      return res.status(500).json({message: 'Server configuration error'});
+        return res.json({loggedIn: false, message: 'Unauthorized access'});
     }
   
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (!process.env.ACCESS_TOKEN_SECRET) {
+      console.error('Access token secret is not defined in environment variables');
+      return res.json({loggedIn: false, message: 'Server configuration error'});
+    }
+  
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err) {
         console.error('Error verifying token:', err.message);
-        return res.sendStatus(403);
+        return res.json({loggedIn: false, message: 'Unauthorized access'});
       }
-      req.user = user;
+      const jwtData = jwt.decode(token);
+      res.json({loggedIn: true, message: 'Token verified', userId: jwtData.userId, username: jwtData.username, password: jwtData.password});
       next();
     });
   }
@@ -65,14 +67,24 @@ app.post('/login', (req, res) => {
         if(!isFound) {
             return res.json({valid: false, message: 'Username or password is incorrect'});
         }
-        const token = jwt.sign(
+        const accessToken = jwt.sign(
             { userId: userId, username: req.body.username , password: req.body.password},
-            process.env.JWT_SECRET,
+            process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '15m' }
           )
+        res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, maxAge:  15 * 60 * 1000 });
         // Login successful - username found
-        return res.json({valid: true, message: 'Login successful', userId: userId, token: token});
+        return res.json({isLoggedIn: true, message: 'Login successful', userId: userId});
     });
+});
+
+app.post('/logout', (req, res) => {
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: true   // must match how it was set
+    })
+    return res.json({isLoggedIn: false, message: 'Logout successful'});
 });
 
 
@@ -109,9 +121,22 @@ app.post('/registration', (req, res) => {
 
 });
 
-app.get('/reservations',authenticateToken, (req, res) => {
+app.get('/getLoginData',authenticateToken, (req, res) => {
     return res;
 })
+
+app.post('/reserveList', (req, res) => {
+    console.log("req.body", req.body);
+    const checkSql = 'SELECT * FROM reservations WHERE userId = ?';
+    const values = [req.body.userId];
+    db.query(checkSql, values, (err, result) => {
+        if (err) {
+            console.error('Error checking reservations:', err);
+            return res.status(500).json({message: 'Error checking reservations'});
+        }
+        return res.json({ reservations: result});
+    });
+});
 
 app.post('/reservations',(req, res) => {
     const checkSql = 'SELECT * FROM reservations';
