@@ -89,6 +89,7 @@ app.post('/logout', (req, res) => {
 
 app.post('/registration', (req, res) => {
     const checkSql = 'SELECT username FROM users ';
+    console.log(sqlDb.connection.database);
     sqlDb.connection.query(checkSql, (err, userList) => {
         if (err) {
             console.log("err", err);

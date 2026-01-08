@@ -6,7 +6,7 @@ const dbCommandsEnum = {
 
 function createCafeDb ()
 {
-    let sql = `CREATE DATABASE IF NOT EXISTS mydb`;
+    let sql = `CREATE DATABASE IF NOT EXISTS cafe`;
     return sql;
 }
 
