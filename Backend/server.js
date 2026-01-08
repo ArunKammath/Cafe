@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const db = require('./db'); // Import MySQL database connection
+const sqlDb = require('./db/sqlDb'); // Import MySQL database connection from sqlDb.js
 const Order = require('./db/mongoDb'); // Import MongoDB connection and Order model
 const jwt = require('jsonwebtoken');
 
@@ -14,7 +14,6 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(express.json()); // Parse JSON request bodies
-
 
 function UniqueIdGenerator(type) {
     let num = Math.floor(1000 + Math.random() * 9000);
@@ -51,7 +50,7 @@ function authenticateToken(req, res, next) {
 
 app.post('/login', (req, res) => {
     const checkSql = 'SELECT username, password, userId FROM users ';
-    db.query(checkSql, (err, userList) => {
+    sqlDb.query(checkSql, (err, userList) => {
         if (err) {
             return res.status(500).json({message: 'Error checking users'});
         }
@@ -90,8 +89,9 @@ app.post('/logout', (req, res) => {
 
 app.post('/registration', (req, res) => {
     const checkSql = 'SELECT username FROM users ';
-    db.query(checkSql, (err, userList) => {
+    sqlDb.connection.query(checkSql, (err, userList) => {
         if (err) {
+            console.log("err", err);
             return res.status(500).json({message: 'Error checking users'});
         }
         for(let i = 0; i < userList.length; i++) {
@@ -111,7 +111,7 @@ app.post('/registration', (req, res) => {
 
         const insertSql = 'INSERT INTO users (userId, username, password) VALUES (?, ?, ?)';
         const values = [userId, req.body.username, req.body.password];
-        db.query(insertSql, values, (err, result) => {
+        sqlDb.connection.query(insertSql, values, (err, result) => {
             if (err) {
                 return res.status(500).json({message: 'Error inserting user'});
             }
@@ -129,7 +129,7 @@ app.post('/reserveList', (req, res) => {
     console.log("req.body", req.body);
     const checkSql = 'SELECT * FROM reservations WHERE userId = ?';
     const values = [req.body.userId];
-    db.query(checkSql, values, (err, result) => {
+    sqlDb.connection.query(checkSql, values, (err, result) => {
         if (err) {
             console.error('Error checking reservations:', err);
             return res.status(500).json({message: 'Error checking reservations'});
@@ -140,7 +140,7 @@ app.post('/reserveList', (req, res) => {
 
 app.post('/reservations',(req, res) => {
     const checkSql = 'SELECT * FROM reservations';
-    db.query(checkSql, (err, result) => {
+    sqlDb.connection.query(checkSql, (err, result) => {
         if (err) {
             return res.status(500).json({message: 'Error checking reservations'});
         }
@@ -174,7 +174,7 @@ app.post('/reservations',(req, res) => {
         if(req.body.isLoggedIn) {
             const insertSql = 'INSERT INTO reservations (userId, reservationId, reservationDate, reservationTime, numGuests, occasion) VALUES (?, ?, ?, ?, ?, ?)';
             const values = [req.body.booking.userId, reservationId, req.body.booking.date, req.body.booking.time, req.body.booking.numGuests, req.body.booking.occasion];
-            db.query(insertSql, values, (err, result) => {
+            sqlDb.connection.query(insertSql, values, (err, result) => {
                 if (err) {
                     return res.status(500).json({message: 'Error saving reservation'});
                 }
@@ -193,7 +193,7 @@ app.post('/reservations',(req, res) => {
 app.post('/ReservationList', (req, res) => {    
     const checkSql = 'DELETE FROM reservations WHERE reservationDate = ? AND reservationTime = ?';
     const values = [req.body.reservationDate, req.body.reservationTime];
-    db.query(checkSql, values, (err, result) => {
+    sqlDb.connection.query(checkSql, values, (err, result) => {
         if (err) {
             return res.status(500).json({message: 'Error deleting reservation'});
         }
