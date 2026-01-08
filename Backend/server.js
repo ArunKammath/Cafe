@@ -50,7 +50,7 @@ function authenticateToken(req, res, next) {
 
 app.post('/login', (req, res) => {
     const checkSql = 'SELECT username, password, userId FROM users ';
-    sqlDb.query(checkSql, (err, userList) => {
+    sqlDb.connection.query(checkSql, (err, userList) => {
         if (err) {
             return res.status(500).json({message: 'Error checking users'});
         }
@@ -89,7 +89,6 @@ app.post('/logout', (req, res) => {
 
 app.post('/registration', (req, res) => {
     const checkSql = 'SELECT username FROM users ';
-    console.log(sqlDb.connection.database);
     sqlDb.connection.query(checkSql, (err, userList) => {
         if (err) {
             console.log("err", err);
