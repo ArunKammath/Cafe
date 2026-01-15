@@ -1,15 +1,15 @@
 import "../style/cart.css";
 import axios from "axios";
-import { useLogin } from "./booking";
+import { useSelector } from "react-redux";
+
 function Cart({items}) {
-    const { loginData } = useLogin();       
+    const userData = useSelector((state) => state.user.userData);       
     const itemCount = items.itemCount;
     const itemPrice = items.itemPrice;
     const setItemCount = items.setItemCount;
    
     const handlePlaceOrder = async () => {
         let toatlAmount=0.00;
-        console.log("Placed Order");
         if(itemCount.total ===0) {
             alert("No items in the cart");
             return;
@@ -29,10 +29,8 @@ function Cart({items}) {
         item: "total",
         amount: toatlAmount
        });
-       console.log(orderList);
-        const res=await axios.post('http://localhost:3000/orders',{userId: loginData.userId, orderList: orderList});
+        const res=await axios.post('http://localhost:3000/orders',{userId: userData.userId, orderList: orderList});
         alert("Order placed successfully");
-        console.log(res);
         setItemCount({
             tea: 0,
             coffee: 0,
@@ -56,7 +54,6 @@ function Cart({items}) {
             }
         }
         
-        console.log(amount);
         return (
             <section id="cart">
                 <h1>Cart</h1>

@@ -80,8 +80,8 @@ app.post('/login', (req, res) => {
 app.post('/logout', (req, res) => {
     res.clearCookie('accessToken', {
       httpOnly: true,
+      secure: true,
       sameSite: 'strict',
-      secure: true   // must match how it was set
     })
     return res.json({isLoggedIn: false, message: 'Logout successful'});
 });
@@ -91,7 +91,6 @@ app.post('/registration', (req, res) => {
     const checkSql = 'SELECT username FROM users ';
     sqlDb.connection.query(checkSql, (err, userList) => {
         if (err) {
-            console.log("err", err);
             return res.status(500).json({message: 'Error checking users'});
         }
         for(let i = 0; i < userList.length; i++) {
@@ -126,7 +125,6 @@ app.get('/getLoginData',authenticateToken, (req, res) => {
 })
 
 app.post('/reserveList', (req, res) => {
-    console.log("req.body", req.body);
     const checkSql = 'SELECT * FROM reservations WHERE userId = ?';
     const values = [req.body.userId];
     sqlDb.connection.query(checkSql, values, (err, result) => {

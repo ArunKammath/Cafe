@@ -8,7 +8,7 @@ import { ModuleRegistry } from "ag-grid-community";
 import { AllCommunityModule } from "ag-grid-community";
 import { RightTabLogin } from "./rightTabLogin";
 import "../style/reservationList.css";
-import { useLogin } from "./booking";
+import { useSelector } from "react-redux";
 
 ModuleRegistry.registerModules([
   AllCommunityModule
@@ -16,26 +16,24 @@ ModuleRegistry.registerModules([
 
 function ReservationList() {
     const [reservations, setReservations] = useState([]);
-    const { loginData } = useLogin();
+    const userData = useSelector((state) => state.user.userData);
     const gridRef = useRef(null);
 
     useEffect(() => {
         async function fetchReservations() {
             try {
-                const res = await axios.post("http://localhost:3000/reserveList", {userId: loginData.userId});
-                console.log(res.data);
+                const res = await axios.post("http://localhost:3000/reserveList", {userId: userData.userId});
                 setReservations(res.data.reservations);
             } catch (error) {
                 console.error("Error fetching reservations:", error);
             }
         }
         fetchReservations();
-    }, [loginData.userId]);
+    }, [userData.userId]);
     const defaultColDef = useMemo(() => ({
         flex: 1
     }), []);
 
-    console.log(reservations);
     const [columnDefs] = useState([
         { field: "reservationId", headerName: "Reservation ID"},
         { field: "reservationDate", headerName: "Reservation Date" },   
@@ -45,12 +43,10 @@ function ReservationList() {
     ]);
     const handleDelete = async () => {
         const selectedRow = gridRef.current?.api.getSelectedRows()[0];
-        console.log(selectedRow);
         const filteredReservations = reservations.filter(r=>!(r.reservationDate === selectedRow.reservationDate && 
                                             r.reservationTime === selectedRow.reservationTime));
         setReservations(filteredReservations);
         const res = await axios.post("http://localhost:3000/ReservationList", selectedRow);
-        console.log(res.data);
     }
     return (
         <React.Fragment>

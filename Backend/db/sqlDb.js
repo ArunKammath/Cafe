@@ -30,7 +30,6 @@ class SqlDb {
         
         if (result[0].db_exists > 0) {
           // Database exists, proceed to connect
-          console.log("Database exists, proceeding to connect");
           this.connection.end();
           this.connectToDatabase();
         } else {

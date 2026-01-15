@@ -6,15 +6,15 @@ import kaypola from "../images/kaypola.jpeg";
 import ullivada from "../images/ullivada.webp";
 import tenderCoconut from "../images/tenderCoconut.jpg";
 import bananaHalwa from "../images/bananaHalwa.jpg";
-import { useLogin } from "./booking";
+import { useSelector } from "react-redux";
 import { RightTabLogin } from "./rightTabLogin";
 import { MenuCard } from "./card";
 import "../style/cart.css";
 import Cart from "./cart";
 
 function OrderOnline() {
-    const { loginData } = useLogin();
-    let loggedIn = loginData.isLoggedIn;
+    const userData = useSelector((state) => state.user.userData);
+    let loggedIn = userData.username !== "";
     const itemPrice = {
         tea: 15,
         coffee: 20,

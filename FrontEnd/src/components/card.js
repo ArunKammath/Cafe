@@ -48,7 +48,6 @@ function Card(props)
 
 function OrderCard(props)
 {
-    console.log("props.items", props.orderList);
     const items = props.orderList;
     const orderNo = props.orderNo;
     return(

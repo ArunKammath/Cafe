@@ -6,7 +6,7 @@ import ullivada from "../images/ullivada.webp";
 import star from "../images/star.png";
 import { Link } from "react-router-dom";
 import React from "react";
-import { useLogin } from "./booking";
+import { useSelector } from "react-redux";
 import {  Card } from "./card";
 
   function HomePage() {
@@ -21,8 +21,8 @@ import {  Card } from "./card";
   );
 }
 function GeneralTopNav() {
-  const { loginData } = useLogin();
-  let loggedIn = loginData.isLoggedIn;
+  const userData = useSelector((state) => state.user.userData);
+  let loggedIn = userData.username !== "";
   if(!loggedIn) {
     return (
       <React.Fragment>

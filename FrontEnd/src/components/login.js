@@ -1,48 +1,55 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useLogin } from "./booking";
+import { useDispatch } from "react-redux";
+import { setUser } from "./user"; 
+
+
 function Login() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [user, setUser] = useState({
+    const [loginData, setLoginData] = useState({
         username: "",
-        password: "",
+        password: ""
     });
-    const {loginData, setLoginData} = useLogin();
+
     const handleChange = (e) => {
-        setUser({
-            ...user,
+        setLoginData({
+            ...loginData,
             [e.target.name]: e.target.value
         });
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.post("http://localhost:3000/login", user, {
+        const res = await axios.post("http://localhost:3000/login", loginData, {
             withCredentials: true
         });
-        setUser({
+       
+        setLoginData({
             username: "",
-            password: "",
+            password: ""
         });
         if(res.data.valid===false) {
           alert(res.data.message);
         }
         else {
-          setLoginData({...loginData, isLoggedIn: true, username: user.username,
-             password: user.password, userId: res.data.userId});
-          navigate("/reservations");
+            dispatch(setUser({
+                username: loginData.username,   
+                password: loginData.password, 
+                userId: res.data.userId
+            }));
+            navigate("/reservations");
         }
-        
-    }
+    }        
     return (
         <React.Fragment>
             <section id="login">
                 <form id="loginForm" onSubmit={handleSubmit}>   
                     <label htmlFor="username">Username :    
-                        <input type="text" id="username" name="username" value={user.username} onChange={handleChange} />
+                        <input type="text" id="username" name="username" value={loginData.username} onChange={handleChange} />
                     </label>
                     <label htmlFor="password">Password :
-                        <input type="password" id="password" name="password" value={user.password} onChange={handleChange} />
+                        <input type="password" id="password" name="password" value={loginData.password} onChange={handleChange} />
                     </label>
                     <button type="submit">Login</button>
                 </form>
@@ -51,5 +58,17 @@ function Login() {
         </React.Fragment>
         )
 }
+
+export async function fetchLoginData() {
+    try {
+      const res = await axios.get('http://localhost:3000/getLoginData',{
+        withCredentials: true
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error in fetching login data:', error);
+      return undefined;
+    }
+  }
 
 export { Login };
