@@ -14,7 +14,7 @@ function RightTabLogin() {
      }).catch(error => {
       console.error('Error fetching login data:', error);
      });
-  }, [])
+  }, [loginData, setLoginData])
   let loggedIn = loginData.isLoggedIn;
   const navigate = useNavigate();
   const handleLogout = async () => {

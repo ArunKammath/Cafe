@@ -15,9 +15,7 @@ function Registration() {
         e.preventDefault();
         console.log("user", user);
         const res = await axios.post("http://localhost:3000/registration", user);
-        if(res.data.valid===false) {
           alert(res.data.message);
-        }
         setUser({
             username: "",
             password: "",
