@@ -1,69 +1,56 @@
 import "../style/cart.css";
 import axios from "axios";
-import { useSelector } from "react-redux";
-
-function Cart({items}) {
-    const userData = useSelector((state) => state.user.userData);       
-    const itemCount = items.itemCount;
-    const itemPrice = items.itemPrice;
-    const setItemCount = items.setItemCount;
-   
+import { useSelector, useDispatch } from "react-redux";
+import { resetItemCount } from "./menu";
+function Cart() {
+    const userData = useSelector((state) => state.user.userData);      
+    const menu = useSelector((state) => state.menu.menu);
+    const totalAmount = useSelector((state) => state.menu.totalAmount);
+    const dispatch = useDispatch();
+    
     const handlePlaceOrder = async () => {
-        let toatlAmount=0.00;
-        if(itemCount.total ===0) {
+        if(totalAmount === 0.00) {
             alert("No items in the cart");
             return;
         }
        const orderList = [];
-       Object.keys(itemCount).forEach(item => {
-        if(item!=="total" && itemCount[item] > 0) {
-            let amount = Number(itemCount[item])*Number(itemPrice[item]);
-            toatlAmount += amount;
+       Object.keys(menu).forEach(item => {
+        if( menu[item].itemCount > 0) {
             orderList.push({
-                    item: item,
-                    amount: amount
-                })
-            }
+                item: menu[item].itemName,
+                amount: menu[item].itemPrice*menu[item].itemCount
+            })
+        }
        });
        orderList.push({
         item: "total",
-        amount: toatlAmount
+        amount: totalAmount
        });
-        const res=await axios.post('http://localhost:3000/orders',{userId: userData.userId, orderList: orderList});
-        alert("Order placed successfully");
-        setItemCount({
-            tea: 0,
-            coffee: 0,
-            elanji: 0,
-            kaypola: 0,
-            ullivada: 0,
-            tenderCoconut: 0,
-            bananaHalwa: 0,
-            total: 0
+        axios.post('http://localhost:3000/orders',{userId: userData.userId, orderList: orderList}).then(response => {
+            if(response.status === 200) {
+                alert("Order placed successfully");
+                dispatch(resetItemCount());
+            } else {
+                alert("Error placing order");
+            }
         });
     }
-    let amount=0.00;
-    if(itemCount.total > 0) {
-        let itemList = [];
-        for(let item in itemCount) {
-            if(itemCount[item] > 0 ) {
-                itemList.push(item);
-                if(item!=="total") {
-                    amount += Number(itemPrice[item])*Number(itemCount[item]);
-                }
-            }
-        }
-        
+    const cartItems = Object.keys(menu).filter(item => menu[item].itemCount > 0);
+    if(cartItems.length > 0) {
         return (
             <section id="cart">
                 <h1>Cart</h1>
-                {itemList.map((item) => (
-                    <section id="item">
-                        <h2>{item}</h2>
-                        <h2>{itemCount[item]}</h2>
-                        <h2>{item!=="total" ? (Number(itemPrice[item])*Number(itemCount[item])).toFixed(2) : amount.toFixed(2)}</h2>
+                {cartItems.map((item, index) => (
+                    <section key={index} id="item">
+                        <h2>{menu[item].itemName}</h2>
+                        <h2>{menu[item].itemCount}</h2>
+                        <h2>Rs. {menu[item].itemPrice*menu[item].itemCount}</h2>
                     </section>
                 ))}
+                <section key={cartItems.length} id="item"> 
+                        <h2>Total Amount</h2>
+                        <h2>Rs. {totalAmount}</h2>
+                </section>
                 <button id="placeOrder" onClick={handlePlaceOrder}>Place Order</button>
             </section>
         )

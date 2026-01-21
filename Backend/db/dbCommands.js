@@ -1,7 +1,12 @@
+
 const dbCommandsEnum = {
     'createCafeDb':createCafeDb,
-    'users':createUsersTable,
-    'reservations':createReservationsTable
+    'populateMenuItems':populateMenuItems,
+    'tables':   {
+        'users':createUsersTable,
+        'reservations':createReservationsTable,
+        'menuitems':createMenuItemsTable,
+    }
 }
 
 function createCafeDb ()
@@ -31,6 +36,28 @@ function createReservationsTable ()
     return sql;
 }
 
+function createMenuItemsTable ()
+{
+    let sql = `CREATE TABLE IF NOT EXISTS menuItems    (   
+    itemName VARCHAR(255) PRIMARY KEY,
+    itemPrice DECIMAL(10, 2) NOT NULL,
+    itemImagePath VARCHAR(255) NOT NULL)`;
+    return sql;
+}
+
+function populateMenuItems (){
+    const values = [
+        ['tea', '15', 'http://localhost:3000/assests/images/tea.jpg'],
+        ['coffee', '20', 'http://localhost:3000/assests/images/coffee.avif'],
+        ['elanji', '30', 'http://localhost:3000/assests/images/Elanji.jpeg'],
+        ['kaypola', '40', 'http://localhost:3000/assests/images/kaypola.jpeg'],
+        ['ullivada', '50', 'http://localhost:3000/assests/images/ullivada.webp'],
+        ['tenderCoconut', '40', 'http://localhost:3000/assests/images/tenderCoconut.jpg'],
+        ['bananaHalwa', '50', 'http://localhost:3000/assests/images/bananaHalwa.jpg']
+    ];
+    let sqlCmd = `INSERT INTO menuitems (itemName, itemPrice, itemImagePath) VALUES ?`;
+    return [sqlCmd, [values]];
+}
 
 
 module.exports = {  dbCommandsEnum };

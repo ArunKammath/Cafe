@@ -14,6 +14,7 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(express.json()); // Parse JSON request bodies
+app.use('/assests/images', express.static('assests/images')); // Serve static files from assests folder
 
 function UniqueIdGenerator(type) {
     let num = Math.floor(1000 + Math.random() * 9000);
@@ -196,6 +197,16 @@ app.post('/ReservationList', (req, res) => {
             return res.status(500).json({message: 'Error deleting reservation'});
         }
         return res.json({message: 'Reservation deleted successfully'});
+    });
+});
+
+app.get('/getMenu', (req, res) => {    
+    const checkSql = 'SELECT * FROM menuitems';
+    sqlDb.connection.query(checkSql, (err, result) => {
+        if (err) {
+            return res.status(500).json({message: 'Error checking menu items'});
+        }
+        return res.status(200).json({menu: result});
     });
 });
 
