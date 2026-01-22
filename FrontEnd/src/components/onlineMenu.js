@@ -37,7 +37,7 @@ function OrderOnline() {
     
     const searchMenu = useMemo(
         () => debounce((searchTerm) => {
-            if (searchTerm.trim() === "") {
+            if(searchTerm.trim() === "") {
                 setSearchResult([]);
                 return;
             }
@@ -57,11 +57,7 @@ function OrderOnline() {
     const handleChange = (e) => {
         const value = e.target.value;
         setItem(value);
-        if(value === "") {
-            setSearchResult([]);
-        }else{
-            searchMenu(value);
-        }
+        searchMenu(value);
     }
     return (
         <React.Fragment>
