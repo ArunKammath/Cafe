@@ -5,7 +5,8 @@ import { RightTabLogin } from "./rightTabLogin";
 import { MenuCard } from "./card";
 import "../style/cart.css";
 import Cart from "./cart";
-
+import { useState, useMemo } from "react";
+import { debounce } from "lodash";
 
 async function fetchMenu() {
    try {
@@ -18,14 +19,59 @@ async function fetchMenu() {
    
 }
 
+function SearchList({searchResult}) {
+    return (
+        <section id="searchResult">
+            {searchResult.map((item) => (
+                <MenuCard key={item.itemName} item={item} />
+            ))}
+        </section>
+    );
+}
+
+
 function OrderOnline() {
     const menu = useSelector((state) => state.menu.menu);
+    const [item, setItem] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
+    
+    const searchMenu = useMemo(
+        () => debounce((searchTerm) => {
+            if (searchTerm.trim() === "") {
+                setSearchResult([]);
+                return;
+            }
+            const itemNames = Object.keys(menu);
+            const searchMenuList = [];
+            itemNames.forEach(name => {
+                if(name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    searchMenuList.push(menu[name]);
+                }
+            });
+            setSearchResult(searchMenuList);
+        }, 500),
+        [menu]
+    );
+    
+    
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setItem(value);
+        if(value === "") {
+            setSearchResult([]);
+        }else{
+            searchMenu(value);
+        }
+    }
     return (
         <React.Fragment>
         <section id="onlineOrder">
             <RightTabLogin />
             <section id="onlineMenu">
-                <section id="menu ">
+                <section id="searchBar">
+                    <input type="text" placeholder="Search for a item" value={item}  onChange={handleChange} />
+                </section>
+                {searchResult.length === 0 &&<section id="menu ">
                     <section id="beverages">
                         <header>
                             <h1>Beverages</h1>
@@ -54,7 +100,8 @@ function OrderOnline() {
                             <MenuCard item={menu.bananaHalwa} />
                         </section>
                     </section>
-                </section>
+                </section>}
+                {searchResult.length > 0 && <SearchList searchResult={searchResult} />}
             </section>
             <Cart />
         </section>

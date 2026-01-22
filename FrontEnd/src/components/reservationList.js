@@ -47,6 +47,7 @@ function ReservationList() {
                                             r.reservationTime === selectedRow.reservationTime));
         setReservations(filteredReservations);
         const res = await axios.post("http://localhost:3000/ReservationList", selectedRow);
+        alert(res.data.message);
     }
     return (
         <React.Fragment>

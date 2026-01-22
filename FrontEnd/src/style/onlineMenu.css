@@ -12,9 +12,9 @@
 
 #onlineMenu {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap: 2rem;
     width: 100%;
     flex-wrap: wrap;
@@ -28,6 +28,56 @@
     flex: 1;
     padding: 1rem;
     min-width: 0;
+}
+
+#searchBar {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    position: relative;
+}
+
+#searchBar input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    outline: none;
+    box-sizing: border-box;
+    color: #333;
+    font-weight: 400;
+}
+
+#searchBar input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+#searchBar input:focus {
+    border-color: #667eea;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    background: #ffffff;
+    transform: translateY(-2px);
+}
+
+#searchBar input:hover {
+    border-color: #667eea;
+    box-shadow: 0 5px 18px rgba(102, 126, 234, 0.2);
+}
+
+#searchResult {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 0.5rem 0;
 }
 
 #beverages,
@@ -125,6 +175,16 @@
         gap: 1.5rem;
     }
     
+    #searchBar {
+        max-width: 550px;
+        padding: 0.875rem;
+    }
+    
+    #searchBar input {
+        padding: 0.875rem 1.25rem;
+        font-size: 1rem;
+    }
+    
     #beverageList,
     #snacksList,
     #dessertsList {
@@ -146,6 +206,17 @@
     
     #menu {
         padding: 0.75rem;
+    }
+    
+    #searchBar {
+        max-width: 100%;
+        padding: 0.75rem;
+    }
+    
+    #searchBar input {
+        padding: 0.875rem 1.125rem;
+        font-size: 0.95rem;
+        border-radius: 40px;
     }
     
     #beverages,
@@ -178,6 +249,16 @@
 @media screen and (max-width: 480px) {
     #onlineOrder {
         padding: 0.75rem;
+    }
+
+    #searchBar {
+        padding: 0.5rem;
+    }
+    
+    #searchBar input {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 35px;
     }
 
     #beverages,
