@@ -88,6 +88,23 @@
     color: white;
 }
 
+#timer {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    background-color: #f0f7ff;
+    border: 1px solid #4a90e2;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#timer p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #2c5aa0;
+    font-weight: 500;
+}
+
 /* Tablet styles (768px - 1024px) */
 @media screen and (max-width: 1024px) {
     #righttab {
@@ -106,6 +123,10 @@
 
     #righttab h1:last-child {
         font-size: 1.4rem;
+    }
+
+    #timer p {
+        font-size: 0.9rem;
     }
 }
 
@@ -138,6 +159,14 @@
         font-size: 0.95rem;
         padding: 0.7rem 1rem;
     }
+
+    #timer {
+        padding: 0.7rem 1rem;
+    }
+
+    #timer p {
+        font-size: 0.9rem;
+    }
 }
 
 /* Small mobile styles (up to 480px) */
@@ -163,5 +192,13 @@
     #righttab button {
         font-size: 0.875rem;
         padding: 0.6rem 0.875rem;
+    }
+
+    #timer {
+        padding: 0.6rem 0.875rem;
+    }
+
+    #timer p {
+        font-size: 0.85rem;
     }
 }

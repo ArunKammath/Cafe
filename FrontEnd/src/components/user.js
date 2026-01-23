@@ -6,6 +6,7 @@ const userSlice = createSlice({
             username: "",
             password: "",
             userId: "",
+            loginTime: 0
         },
     },
     reducers: {

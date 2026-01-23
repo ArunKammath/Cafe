@@ -44,7 +44,8 @@ function authenticateToken(req, res, next) {
         return res.json({loggedIn: false, message: 'Unauthorized access'});
       }
       const jwtData = jwt.decode(token);
-      res.json({loggedIn: true, message: 'Token verified', userId: jwtData.userId, username: jwtData.username, password: jwtData.password});
+      res.json({loggedIn: true, message: 'Token verified', userId: jwtData.userId, username: jwtData.username,
+                 password: jwtData.password, loginTime: jwtData.loginTime});
       next();
     });
   }
@@ -67,14 +68,15 @@ app.post('/login', (req, res) => {
         if(!isFound) {
             return res.json({valid: false, message: 'Username or password is incorrect'});
         }
+        console.log(req.body.loginTime);
         const accessToken = jwt.sign(
-            { userId: userId, username: req.body.username , password: req.body.password},
+            { userId: userId, username: req.body.username , password: req.body.password, loginTime: req.body.loginTime},
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '15m' }
           )
         res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, maxAge:  15 * 60 * 1000 });
         // Login successful - username found
-        return res.json({isLoggedIn: true, message: 'Login successful', userId: userId});
+        return res.json({isLoggedIn: true, message: 'Login successful', userId: userId, loginTime: req.body.loginTime});
     });
 });
 

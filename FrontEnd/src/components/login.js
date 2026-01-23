@@ -21,13 +21,14 @@ function Login() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.post("http://localhost:3000/login", loginData, {
+        const loginTime = new Date().getTime();
+        const res = await axios.post("http://localhost:3000/login", {username: loginData.username, password: loginData.password, loginTime: loginTime}, {
             withCredentials: true
         });
        
         setLoginData({
             username: "",
-            password: ""
+            password: "",
         });
         if(res.data.valid===false) {
           alert(res.data.message);
@@ -36,11 +37,12 @@ function Login() {
             dispatch(setUser({
                 username: loginData.username,   
                 password: loginData.password, 
-                userId: res.data.userId
+                userId: res.data.userId,
+                loginTime: loginTime
             }));
             navigate("/reservations");
-        }
-    }        
+        }   
+    };
     return (
         <React.Fragment>
             <section id="login">
