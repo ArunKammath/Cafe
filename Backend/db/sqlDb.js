@@ -15,7 +15,7 @@ class SqlDb {
       dateStrings: true,
       connectTimeout: 15000
     });
-    this.connectToSqlDb();
+    //this.connectToSqlDb();
   }
 
   connectToSqlDb() {
