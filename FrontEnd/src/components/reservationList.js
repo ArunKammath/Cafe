@@ -22,7 +22,7 @@ function ReservationList() {
     useEffect(() => {
         async function fetchReservations() {
             try {
-                const res = await axios.post("http://localhost:3000/reserveList", {userId: userData.userId});
+                const res = await axios.post(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/reserveList`, {userId: userData.userId});
                 setReservations(res.data.reservations);
             } catch (error) {
                 console.error("Error fetching reservations:", error);
@@ -46,7 +46,7 @@ function ReservationList() {
         const filteredReservations = reservations.filter(r=>!(r.reservationDate === selectedRow.reservationDate && 
                                             r.reservationTime === selectedRow.reservationTime));
         setReservations(filteredReservations);
-        const res = await axios.post("http://localhost:3000/ReservationList", selectedRow);
+        const res = await axios.post(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/ReservationList`, selectedRow);
         alert(res.data.message);
     }
     return (

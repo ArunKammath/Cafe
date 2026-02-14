@@ -50,7 +50,7 @@ function Reservations() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const bookingWithUserId = {...booking, userId: userData.userId};
-        const res = await axios.post("http://localhost:3000/reservations", {booking: bookingWithUserId, isLoggedIn: loggedIn});
+        const res = await axios.post(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/reservations`, {booking: bookingWithUserId, isLoggedIn: loggedIn});
         alert(res.data.message);
         // Reset form after submission
         setBooking({

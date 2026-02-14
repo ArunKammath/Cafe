@@ -7,11 +7,13 @@ const { dbCommandsEnum } = require('./dbCommands');
 class SqlDb {
   constructor() {
     this.connection = mysql.createConnection({
-      host: 'localhost',     // host for connection
-      port: 3306,            // default port for mysql is 3306
-      user: 'root',          // username of the mysql connection
-      password: '1234',
-      dateStrings: true      // Return dates as strings instead of Date objects (YYYY-MM-DD format)
+      host: process.env.DB_HOST || 'localhost',     // host for connection
+      port: parseInt(process.env.DB_PORT, 10) || 3306,
+      user: (process.env.DB_USER || 'root').replace(/^['"]|['"]$/g, '').trim(),
+      password: (process.env.DB_PASSWORD || '').replace(/^['"]|['"]$/g, '').trim(),
+      database: 'mysql',
+      dateStrings: true,
+      connectTimeout: 15000
     });
     this.connectToSqlDb();
   }
@@ -40,7 +42,7 @@ class SqlDb {
             if (err) throw err;
             // Now connect to the created database
             this.connection.end();
-            this.connectToDatabase();
+              this.connectToDatabase();
           });
         }
       });
@@ -48,13 +50,16 @@ class SqlDb {
   }
 
   connectToDatabase() {
+    require('dotenv').config();
+    const host = (process.env.DB_HOST || 'localhost').replace(/^['"]|['"]$/g, '').trim();
     this.connection = mysql.createConnection({
-        host: 'localhost',     // host for connection
-        port: 3306,            // default port for mysql is 3306
-        user: 'root',          // username of the mysql connection
-        password: '1234',
-        database: 'cafe',      // database name
-        dateStrings: true      // Return dates as strings instead of Date objects (YYYY-MM-DD format)
+        host,
+        port: parseInt(process.env.DB_PORT, 10) || 3306,
+        user: (process.env.DB_USER || 'root').replace(/^['"]|['"]$/g, '').trim(),
+        password: (process.env.DB_PASSWORD || '').replace(/^['"]|['"]$/g, '').trim(),
+        database: (process.env.DB_NAME || 'cafe').replace(/^['"]|['"]$/g, '').trim(),
+        dateStrings: true,
+        connectTimeout: 15000
     });
   
     console.log('Connected to MySQL database');

@@ -226,7 +226,7 @@ app.post('/orders', async (req, res) => {
 
 
 app.listen(PORT, () => {    
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on ${process.env.BACKEND_URL || `http://localhost:${PORT}`}`);
 });
 
 
