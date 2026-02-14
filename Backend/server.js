@@ -213,13 +213,13 @@ app.get('/getMenu', (req, res) => {
 });
 
 app.post('/orderList', async (req, res) => {
-    const orderList = await Order.find({userId: req.body.userId});
+    const orderList = [] //await Order.find({userId: req.body.userId});
     res.json({orders: orderList});
 });
 
 app.post('/orders', async (req, res) => {
-    const newOrder = await Order.insertOne({userId: req.body.userId, orderList: req.body.orderList});
-    console.log("newOrder", newOrder);
+    /*const newOrder = await Order.insertOne({userId: req.body.userId, orderList: req.body.orderList});
+    console.log("newOrder", newOrder);*/
     res.json({message: 'Order saved successfully'});
 });
 
