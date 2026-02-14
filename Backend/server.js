@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const sqlDb = require('./db/sqlDb'); // Import MySQL database connection from sqlDb.js
-const Order = require('./db/mongoDb'); // Import MongoDB connection and Order model
+//const Order = require('./db/mongoDb'); // Import MongoDB connection and Order model
 const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 3000;

@@ -6,7 +6,7 @@ const { dbCommandsEnum } = require('./dbCommands');
 
 class SqlDb {
   constructor() {
-    /*this.connection = mysql.createConnection({
+    this.connection = mysql.createConnection({
       host: process.env.DB_HOST || 'localhost',     // host for connection
       port: parseInt(process.env.DB_PORT, 10) || 3306,
       user: (process.env.DB_USER || 'root').replace(/^['"]|['"]$/g, '').trim(),
@@ -15,7 +15,7 @@ class SqlDb {
       dateStrings: true,
       connectTimeout: 15000
     });
-    this.connectToSqlDb();*/
+    this.connectToSqlDb();
   }
 
   connectToSqlDb() {
