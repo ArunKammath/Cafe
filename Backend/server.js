@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: "https://cafe-1-sepia.vercel.app",
+    origin: process.env.FONT_END_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }));
