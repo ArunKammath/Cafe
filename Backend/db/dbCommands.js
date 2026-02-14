@@ -46,14 +46,15 @@ function createMenuItemsTable ()
 }
 
 function populateMenuItems (){
+    const BACKEND_URL = 'https://cafe-dj56.onrender.com';
     const values = [
-        ['tea', '15', `${process.env.BACKEND_URL}/assests/images/tea.jpg`],  // TODO: Change to the actual image path
-        ['coffee', '20', `${process.env.BACKEND_URL}/assests/images/coffee.avif`],
-        ['elanji', '30', `${process.env.BACKEND_URL}/assests/images/Elanji.jpeg`],
-        ['kaypola', '40', `${process.env.BACKEND_URL}/assests/images/kaypola.jpeg`],
-        ['ullivada', '50', `${process.env.BACKEND_URL}/assests/images/ullivada.webp`],
-        ['tenderCoconut', '40', `${process.env.BACKEND_URL}/assests/images/tenderCoconut.jpg`],
-        ['bananaHalwa', '50', `${process.env.BACKEND_URL}/assests/images/bananaHalwa.jpg`]
+        ['tea', '15', `${BACKEND_URL}/assests/images/tea.jpg`],  
+        ['coffee', '20', `${BACKEND_URL}/assests/images/coffee.avif`],
+        ['elanji', '30', `${BACKEND_URL}/assests/images/Elanji.jpeg`],
+        ['kaypola', '40', `${BACKEND_URL}/assests/images/kaypola.jpeg`],
+        ['ullivada', '50', `${BACKEND_URL}/assests/images/ullivada.webp`],
+        ['tenderCoconut', '40', `${BACKEND_URL}/assests/images/tenderCoconut.jpg`],
+        ['bananaHalwa', '50', `${BACKEND_URL}/assests/images/bananaHalwa.jpg`]
     ];
     let sqlCmd = `INSERT INTO menuitems (itemName, itemPrice, itemImagePath) VALUES ?`;
     return [sqlCmd, [values]];
