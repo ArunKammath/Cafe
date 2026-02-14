@@ -9,9 +9,10 @@ const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: ['http://localhost:5000'],
+    origin: "https://cafe-1-sepia.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
-}));
+  }));
 app.use(cookieParser());
 app.use(express.json()); // Parse JSON request bodies
 app.use('/assests/images', express.static('assests/images')); // Serve static files from assests folder
