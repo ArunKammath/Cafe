@@ -75,7 +75,7 @@ app.post('/login', (req, res) => {
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '15m' }
           )
-        res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, maxAge:  15 * 60 * 1000 });
+        res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge:  15 * 60 * 1000 });
         // Login successful - username found
         return res.json({isLoggedIn: true, message: 'Login successful', userId: userId, loginTime: req.body.loginTime});
     });
