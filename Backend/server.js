@@ -1,12 +1,20 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const db = require('./db'); // Import MySQL database connection
+const cookieParser = require('cookie-parser');
+const sqlDb = require('./db/sqlDb'); // Import MySQL database connection from sqlDb.js
 const Order = require('./db/mongoDb'); // Import MongoDB connection and Order model
+const jwt = require('jsonwebtoken');
 
-app.use(cors());
+const PORT = process.env.PORT || 3000;
+app.use(cors({
+    origin: ['http://localhost:5000'],
+    credentials: true
+}));
+app.use(cookieParser());
 app.use(express.json()); // Parse JSON request bodies
-const PORT = 3000;
+app.use('/assests/images', express.static('assests/images')); // Serve static files from assests folder
 
 function UniqueIdGenerator(type) {
     let num = Math.floor(1000 + Math.random() * 9000);
@@ -19,11 +27,33 @@ function UniqueIdGenerator(type) {
     return 'INVALID';
 }
 
-app.post('/login', (req, res) => {console.log("req.body", req.body);
+function authenticateToken(req, res, next) {
+    const token = req.cookies?.accessToken;
+    if (!token) {
+        return res.json({loggedIn: false, message: 'Unauthorized access'});
+    }
+  
+    if (!process.env.ACCESS_TOKEN_SECRET) {
+      console.error('Access token secret is not defined in environment variables');
+      return res.json({loggedIn: false, message: 'Server configuration error'});
+    }
+  
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        console.error('Error verifying token:', err.message);
+        return res.json({loggedIn: false, message: 'Unauthorized access'});
+      }
+      const jwtData = jwt.decode(token);
+      res.json({loggedIn: true, message: 'Token verified', userId: jwtData.userId, username: jwtData.username,
+                 password: jwtData.password, loginTime: jwtData.loginTime});
+      next();
+    });
+  }
+
+app.post('/login', (req, res) => {
     const checkSql = 'SELECT username, password, userId FROM users ';
-    db.query(checkSql, (err, userList) => {
+    sqlDb.connection.query(checkSql, (err, userList) => {
         if (err) {
-            console.error('Error checking users:', err);
             return res.status(500).json({message: 'Error checking users'});
         }
         let isFound=false;
@@ -38,30 +68,32 @@ app.post('/login', (req, res) => {console.log("req.body", req.body);
         if(!isFound) {
             return res.json({valid: false, message: 'Username or password is incorrect'});
         }
+        console.log(req.body.loginTime);
+        const accessToken = jwt.sign(
+            { userId: userId, username: req.body.username , password: req.body.password, loginTime: req.body.loginTime},
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '15m' }
+          )
+        res.cookie('accessToken', accessToken, { httpOnly: true, secure: true, maxAge:  15 * 60 * 1000 });
         // Login successful - username found
-        return res.json({valid: true, message: 'Login successful', userId: userId});
+        return res.json({isLoggedIn: true, message: 'Login successful', userId: userId, loginTime: req.body.loginTime});
     });
 });
 
-app.post('/reserveList', (req, res) => {
-    console.log("req.body", req.body);
-    const checkSql = 'SELECT * FROM reservations WHERE userId = ?';
-    const values = [req.body.userId];
-    db.query(checkSql, values, (err, result) => {
-        if (err) {
-            console.error('Error checking reservations:', err);
-            return res.status(500).json({message: 'Error checking reservations'});
-        }
-        return res.json({ reservations: result});
-    });
+app.post('/logout', (req, res) => {
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    })
+    return res.json({isLoggedIn: false, message: 'Logout successful'});
 });
+
 
 app.post('/registration', (req, res) => {
-    console.log("req.body", req.body);
     const checkSql = 'SELECT username FROM users ';
-    db.query(checkSql, (err, userList) => {
+    sqlDb.connection.query(checkSql, (err, userList) => {
         if (err) {
-            console.error('Error checking users:', err);
             return res.status(500).json({message: 'Error checking users'});
         }
         for(let i = 0; i < userList.length; i++) {
@@ -81,9 +113,8 @@ app.post('/registration', (req, res) => {
 
         const insertSql = 'INSERT INTO users (userId, username, password) VALUES (?, ?, ?)';
         const values = [userId, req.body.username, req.body.password];
-        db.query(insertSql, values, (err, result) => {
+        sqlDb.connection.query(insertSql, values, (err, result) => {
             if (err) {
-                console.error('Error inserting user:', err);
                 return res.status(500).json({message: 'Error inserting user'});
             }
             return res.json({valid: true, message: 'User registered successfully'});
@@ -92,12 +123,26 @@ app.post('/registration', (req, res) => {
 
 });
 
-app.post('/reservations', (req, res) => {
-    console.log("req.body", req.body);
-    const checkSql = 'SELECT * FROM reservations';
-    db.query(checkSql, (err, result) => {
+app.get('/getLoginData',authenticateToken, (req, res) => {
+    return res;
+})
+
+app.post('/reserveList', (req, res) => {
+    const checkSql = 'SELECT * FROM reservations WHERE userId = ?';
+    const values = [req.body.userId];
+    sqlDb.connection.query(checkSql, values, (err, result) => {
         if (err) {
             console.error('Error checking reservations:', err);
+            return res.status(500).json({message: 'Error checking reservations'});
+        }
+        return res.json({ reservations: result});
+    });
+});
+
+app.post('/reservations',(req, res) => {
+    const checkSql = 'SELECT * FROM reservations';
+    sqlDb.connection.query(checkSql, (err, result) => {
+        if (err) {
             return res.status(500).json({message: 'Error checking reservations'});
         }
         const bookingList = result;
@@ -130,9 +175,8 @@ app.post('/reservations', (req, res) => {
         if(req.body.isLoggedIn) {
             const insertSql = 'INSERT INTO reservations (userId, reservationId, reservationDate, reservationTime, numGuests, occasion) VALUES (?, ?, ?, ?, ?, ?)';
             const values = [req.body.booking.userId, reservationId, req.body.booking.date, req.body.booking.time, req.body.booking.numGuests, req.body.booking.occasion];
-            db.query(insertSql, values, (err, result) => {
+            sqlDb.connection.query(insertSql, values, (err, result) => {
                 if (err) {
-                    console.error('Error inserting reservation:', err);
                     return res.status(500).json({message: 'Error saving reservation'});
                 }
                 res.status(201).json({
@@ -148,27 +192,32 @@ app.post('/reservations', (req, res) => {
 });
 
 app.post('/ReservationList', (req, res) => {    
-    console.log("req.body", req.body);
     const checkSql = 'DELETE FROM reservations WHERE reservationDate = ? AND reservationTime = ?';
     const values = [req.body.reservationDate, req.body.reservationTime];
-    db.query(checkSql, values, (err, result) => {
+    sqlDb.connection.query(checkSql, values, (err, result) => {
         if (err) {
-            console.error('Error deleting reservation:', err);
             return res.status(500).json({message: 'Error deleting reservation'});
         }
         return res.json({message: 'Reservation deleted successfully'});
     });
 });
 
+app.get('/getMenu', (req, res) => {    
+    const checkSql = 'SELECT * FROM menuitems';
+    sqlDb.connection.query(checkSql, (err, result) => {
+        if (err) {
+            return res.status(500).json({message: 'Error checking menu items'});
+        }
+        return res.status(200).json({menu: result});
+    });
+});
+
 app.post('/orderList', async (req, res) => {
-    console.log("req.body", req.body);
     const orderList = await Order.find({userId: req.body.userId});
-    console.log("orderList", orderList);
     res.json({orders: orderList});
 });
 
 app.post('/orders', async (req, res) => {
-    console.log("req.body", req.body);
     const newOrder = await Order.insertOne({userId: req.body.userId, orderList: req.body.orderList});
     console.log("newOrder", newOrder);
     res.json({message: 'Order saved successfully'});
@@ -176,7 +225,7 @@ app.post('/orders', async (req, res) => {
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, () => {    
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 

@@ -1,55 +1,80 @@
-import React, { useState } from "react";
-import tea from "../images/tea.webp";
-import coffee from "../images/coffee.avif";
-import Elanji from "../images/Elanji.jpeg";
-import kaypola from "../images/kaypola.jpeg";
-import ullivada from "../images/ullivada.webp";
-import tenderCoconut from "../images/tenderCoconut.jpg";
-import bananaHalwa from "../images/bananaHalwa.jpg";
-import { useLogin } from "./booking";
+import React from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 import { RightTabLogin } from "./rightTabLogin";
 import { MenuCard } from "./card";
 import "../style/cart.css";
 import Cart from "./cart";
+import { useState, useMemo } from "react";
+import { debounce } from "lodash";
+
+async function fetchMenu() {
+   try {
+    const response = await axios.get('http://localhost:3000/getMenu');
+    return response.data.menu;
+    } catch (error) {
+        console.error('Error fetching menu:', error);
+        return {}
+    }
+   
+}
+
+function SearchList({searchResult}) {
+    return (
+        <section id="searchResult">
+            {searchResult.map((item) => (
+                <MenuCard key={item.itemName} item={item} />
+            ))}
+        </section>
+    );
+}
+
 
 function OrderOnline() {
-    const { loginData } = useLogin();
-    let loggedIn = loginData.isLoggedIn;
-    const itemPrice = {
-        tea: 15,
-        coffee: 20,
-        elanji: 30,
-        kaypola: 40,
-        ullivada: 50,
-        tenderCoconut: 40,
-        bananaHalwa: 50
+    const menu = useSelector((state) => state.menu.menu);
+    const [item, setItem] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
+    
+    const searchMenu = useMemo(
+        () => debounce((searchTerm) => {
+            if(searchTerm.trim() === "") {
+                setSearchResult([]);
+                return;
+            }
+            const itemNames = Object.keys(menu);
+            const searchMenuList = [];
+            itemNames.forEach(name => {
+                if(name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    searchMenuList.push(menu[name]);
+                }
+            });
+            setSearchResult(searchMenuList);
+        }, 500),
+        [menu]
+    );
+    
+    
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setItem(value);
+        searchMenu(value);
     }
-    const [itemCount, setItemCount] = useState({
-        tea: 0,
-        coffee: 0,
-        elanji: 0,
-        kaypola: 0,
-        ullivada: 0,
-        tenderCoconut: 0,
-        bananaHalwa: 0,
-        total: 0
-    });
-
-    const items = {itemCount: itemCount, setItemCount: setItemCount, itemPrice: itemPrice, loggedIn: loggedIn};
-
     return (
         <React.Fragment>
         <section id="onlineOrder">
             <RightTabLogin />
             <section id="onlineMenu">
-                <section id="menu ">
+                <section id="searchBar">
+                    <input type="text" placeholder="Search for a item" value={item}  onChange={handleChange} />
+                </section>
+                {searchResult.length === 0 &&<section id="menu ">
                     <section id="beverages">
                         <header>
                             <h1>Beverages</h1>
                         </header>
                         <section id="beverageList">
-                                <MenuCard image={tea} name="tea" items={items} />
-                                <MenuCard image={coffee} name="coffee" items={items} />
+                                <MenuCard item={menu.tea} />
+                                <MenuCard item={menu.coffee} />
                         </section>
                     </section>
                     <section id="snacks">
@@ -57,9 +82,9 @@ function OrderOnline() {
                             <h1>Snacks</h1>
                         </header>
                         <section id="snacksList">
-                            <MenuCard image={Elanji} name="elanji" items={items} />
-                            <MenuCard image={kaypola} name="kaypola" items={items} />
-                            <MenuCard image={ullivada} name="ullivada" items={items} />
+                            <MenuCard item={menu.elanji} />
+                            <MenuCard item={menu.kaypola} />
+                            <MenuCard item={menu.ullivada} />
                         </section>
                     </section>
                     <section id="desserts">
@@ -67,15 +92,16 @@ function OrderOnline() {
                             <h1>Desserts</h1>
                         </header>
                         <section id="dessertsList">
-                            <MenuCard image={tenderCoconut} name="tenderCoconut" items={items} />
-                            <MenuCard image={bananaHalwa} name="bananaHalwa" items={items} />
+                            <MenuCard item={menu.tenderCoconut} />
+                            <MenuCard item={menu.bananaHalwa} />
                         </section>
                     </section>
-                </section>
+                </section>}
+                {searchResult.length > 0 && <SearchList searchResult={searchResult} />}
             </section>
-            <Cart items={items} />
+            <Cart />
         </section>
         </React.Fragment>
     );
   }
-export { OrderOnline };
+export { OrderOnline , fetchMenu }; 

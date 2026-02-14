@@ -1,28 +1,26 @@
-import logo from "../images/logo.jpg";
-import snacksImage from "../images/snacks.jpg";
-import Elanji from "../images/Elanji.jpeg";
-import kaypola from "../images/kaypola.jpeg";
-import ullivada from "../images/ullivada.webp";
-import star from "../images/star.png";
+
 import { Link } from "react-router-dom";
 import React from "react";
-import { useLogin } from "./booking";
+import { useSelector } from "react-redux";
 import {  Card } from "./card";
+import logo from "../images/logo.jpg";
+import star from "../images/star.png";
+import snacksImage from "../images/snacks.jpg";
 
-  function HomePage() {
+function HomePage() {
   return (
     <React.Fragment>
       <HeroSection />
       <Main />
-      <Testimonials />
+      <Testimonials /> 
       <About />
       <Contact />
     </React.Fragment>
   );
 }
 function GeneralTopNav() {
-  const { loginData } = useLogin();
-  let loggedIn = loginData.isLoggedIn;
+  const userData = useSelector((state) => state.user.userData);
+  let loggedIn = userData.username !== "";
   if(!loggedIn) {
     return (
       <React.Fragment>
@@ -59,6 +57,7 @@ function TopNav() {
 }
 
 function HeroSection() {
+  const snacksImagePath=snacksImage;
   return (
     <header id="heroSection">
       <section>
@@ -70,12 +69,14 @@ function HeroSection() {
           <button>Reserve a table</button>
         </Link>
       </section>
-      <img src={snacksImage} alt="snacksImage" />
+      <img src={snacksImagePath} alt="snacksImage" />
     </header>
   );
 }
 
 function Main() {
+  const menu = useSelector((state) => state.menu.menu);  
+  console.log(menu);
   return (
     <main id="highlights">
       <header>
@@ -85,9 +86,9 @@ function Main() {
         </Link>
       </header>
       <section id="specials">
-        <Card name="Elanji" description="A mix of grated coconut and dryfruits!" image={Elanji} />
-        <Card name="Kaypola" description="Fruits in an Egg cake!" image={kaypola} />
-        <Card name="Ullivada" description="Onion with batter deep fried!" image={ullivada} />
+        <Card name="Elanji" description="A mix of grated coconut and dryfruits!" image={menu.elanji.itemImagePath} />
+        <Card name="Kaypola" description="Fruits in an Egg cake!" image={menu.kaypola.itemImagePath} />
+        <Card name="Ullivada" description="Onion with batter deep fried!" image={menu.ullivada.itemImagePath} />
       </section>
     </main>
   );
@@ -96,12 +97,13 @@ function Main() {
 function Star({ num }) {
   let stars = [];
   for (let i = 0; i < num; i++) {
-    stars.push(<img src={star} alt="star" />);
+    stars.push(<img key={i} src={star} alt="star" />);
   }
   return <div id="stars">{stars}</div>;
 }
 
 function Testimonials() {
+
   return (
     <header id="testimonials">
       <h1>Testimonials</h1>
@@ -149,7 +151,7 @@ function About() {
 function Contact() {
   return (
     <section id="footer">
-      <img src={logo} alt="logo" />
+      <img src={logo} alt="logo" /> 
       <p>Phone: 9876543210</p>
       <p>Email: tattukkada@gmail.com</p>
       <p>Address: somewhere, Kochi</p>

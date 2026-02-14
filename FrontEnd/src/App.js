@@ -15,10 +15,33 @@ import { Login } from "./components/login";
 import { Registration } from "./components/registration";
 import ReservationList from "./components/reservationList";
 import OrderList from "./components/OrderList";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setMenu } from "./components/menu";
+import { fetchMenu } from "./components/onlineMenu";
+
+function AppRoot(){
+  const dispatch = useDispatch(); 
+  const isInitialized = useSelector((state) => state.menu.isInitialized);
+  useEffect(() => {
+    if(!isInitialized){
+      fetchMenu().then(menu => {
+        dispatch(setMenu(menu));
+      });
+    }
+  }, [dispatch, isInitialized]);
+
+  if(!isInitialized){
+    return <div>Loading...</div>;
+  }
+
+  return <App />
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <body id="pageLayout">
+      <div id="pageLayout">
         <TopNav />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -31,9 +54,9 @@ function App() {
           <Route path="/ReservationList" element={<ReservationList />} />
           <Route path="/OrderList" element={<OrderList />} />
         </Routes>
-      </body>
+      </div>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default AppRoot;

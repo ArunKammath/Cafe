@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "../style/reservation.css"; 
 import axios from "axios";
-import { useLogin } from "./booking";
+import { useSelector } from "react-redux";
 import { RightTabLogin } from "./rightTabLogin";
-
 function CheckAvailability() { 
   return (
     <React.Fragment>
@@ -31,15 +30,14 @@ function ReservationForm({booking, handleChange}) {
 }
 
 function Reservations() {
-   const { loginData } = useLogin();
-    let loggedIn = loginData.isLoggedIn;
+    const userData = useSelector((state) => state.user.userData);
+    let loggedIn = userData.username !== "";
     const [booking, setBooking] = useState({
         date: "",
         time: "",
         numGuests:0,
         occasion: ""
     });
-
     const handleChange = (e) => {
       const value = e.target.name === "numGuests" ? Number(e.target.value) : e.target.value;
         setBooking({
@@ -51,8 +49,7 @@ function Reservations() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const bookingWithUserId = {...booking, userId: loginData.userId};
-        console.log("userId", loginData.userId);
+        const bookingWithUserId = {...booking, userId: userData.userId};
         const res = await axios.post("http://localhost:3000/reservations", {booking: bookingWithUserId, isLoggedIn: loggedIn});
         alert(res.data.message);
         // Reset form after submission
