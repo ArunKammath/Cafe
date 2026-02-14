@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: process.env.FONT_END_URL,
+    origin: process.env.Frontend_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }));
