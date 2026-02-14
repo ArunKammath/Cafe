@@ -22,7 +22,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const loginTime = new Date().getTime();
-        const res = await axios.post(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/login`, {username: loginData.username, password: loginData.password, loginTime: loginTime}, {
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, {username: loginData.username, password: loginData.password, loginTime: loginTime}, {
             withCredentials: true
         });
        
@@ -63,7 +63,7 @@ function Login() {
 
 export async function fetchLoginData() {
     try {
-      const res = await axios.get(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/getLoginData`,{
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/getLoginData`,{
         withCredentials: true
       });
       return res.data;

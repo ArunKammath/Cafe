@@ -10,7 +10,7 @@ import { debounce } from "lodash";
 
 async function fetchMenu() {
    try {
-    const response = await axios.get(`http://localhost:3000/getMenu`);
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/getMenu`);
     return response.data.menu;
     } catch (error) {
         console.error('Error fetching menu:', error);

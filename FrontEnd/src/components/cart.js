@@ -26,7 +26,7 @@ function Cart() {
         item: "total",
         amount: totalAmount
        });
-        axios.post(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/orders`,{userId: userData.userId, orderList: orderList}).then(response => {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/orders`,{userId: userData.userId, orderList: orderList}).then(response => {
             if(response.status === 200) {
                 alert("Order placed successfully");
                 dispatch(resetItemCount());

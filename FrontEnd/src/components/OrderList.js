@@ -10,7 +10,7 @@ function OrderList() {
     const [orders, setOrders] = useState([]);
     useEffect(() => {
         async function fetchOrders() {
-            const res = await axios.post(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/orderList`, {userId: userData.userId});    
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/orderList`, {userId: userData.userId});     
             setOrders(res.data.orders);
         }
         fetchOrders();

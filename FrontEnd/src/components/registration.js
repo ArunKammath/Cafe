@@ -13,7 +13,7 @@ function Registration() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.post(`${(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000')}/registration`, user);
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/registration`, user);
         alert(res.data.message);
         setUser({
             username: "",
