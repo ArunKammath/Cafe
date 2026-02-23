@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { useSelector } from "react-redux";
 import {  Card } from "./card";
-import logo from "../images/logo.jpg";
-import star from "../images/star.png";
-import snacksImage from "../images/snacks.jpg";
+import logo from "../../public/images/logo.jpg";
+import star from "../../public/images/star.png";
+import snacksImage from "../../public/images/snacks.jpg";
 
 function HomePage() {
   return (
@@ -57,7 +57,6 @@ function TopNav() {
 }
 
 function HeroSection() {
-  const snacksImagePath=snacksImage;
   return (
     <header id="heroSection">
       <section>
@@ -69,7 +68,7 @@ function HeroSection() {
           <button>Reserve a table</button>
         </Link>
       </section>
-      <img src={snacksImagePath} alt="snacksImage" />
+      <img src={snacksImage} alt="snacksImage" />
     </header>
   );
 }
