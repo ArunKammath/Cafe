@@ -50,7 +50,7 @@ function TopNav() {
         <button>Reservations</button>
       </Link>
       <Link to="/orderonline">
-        <button>Orders</button>
+        <button>Order Online</button>
       </Link>
     </nav>
   );
@@ -75,8 +75,9 @@ function HeroSection() {
 }
 
 function Main() {
-  const menu = useSelector((state) => state.menu.menu);  
-  console.log(menu);
+  const elanjiImagePath = "../images/elanji.jpg";
+  const kaypolaImagePath = "../images/kaypola.jpg";
+  const ullivadaImagePath = "../images/ullivada.jpg";
   return (
     <main id="highlights">
       <header>
@@ -86,9 +87,9 @@ function Main() {
         </Link>
       </header>
       <section id="specials">
-        <Card name="Elanji" description="A mix of grated coconut and dryfruits!" image={menu.elanji.itemImagePath} />
-        <Card name="Kaypola" description="Fruits in an Egg cake!" image={menu.kaypola.itemImagePath} />
-        <Card name="Ullivada" description="Onion with batter deep fried!" image={menu.ullivada.itemImagePath} />
+        <Card name="Elanji" description="A mix of grated coconut and dryfruits!" image={elanjiImagePath} />
+        <Card name="Kaypola" description="Fruits in an Egg cake!" image={kaypolaImagePath} />
+        <Card name="Ullivada" description="Onion with batter deep fried!" image={ullivadaImagePath} />
       </section>
     </main>
   );

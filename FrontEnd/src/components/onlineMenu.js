@@ -7,6 +7,11 @@ import "../style/cart.css";
 import Cart from "./cart";
 import { useState, useMemo } from "react";
 import { debounce } from "lodash";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setMenu } from "./menu";
+import Loading from "./Loading";
+
 
 async function fetchMenu() {
    try {
@@ -18,6 +23,20 @@ async function fetchMenu() {
     }
    
 }
+
+function LoadMenuFromServer(){
+    const dispatch = useDispatch(); 
+    const isInitialized = useSelector((state) => state.menu.isInitialized);
+    useEffect(() => {
+      if(!isInitialized){
+        fetchMenu().then(menu => {
+          dispatch(setMenu(menu));
+        });
+      }
+    }, [dispatch, isInitialized]);
+  
+    return isInitialized;
+  }
 
 function SearchList({searchResult}) {
     return (
@@ -31,6 +50,8 @@ function SearchList({searchResult}) {
 
 
 function OrderOnline() {
+    const isInitialized = LoadMenuFromServer();
+    
     const menu = useSelector((state) => state.menu.menu);
     const [item, setItem] = useState("");
     const [searchResult, setSearchResult] = useState([]);
@@ -52,8 +73,11 @@ function OrderOnline() {
         }, 500),
         [menu]
     );
-    
-    
+
+    if (!isInitialized) {
+        return <Loading />;
+    }
+
     const handleChange = (e) => {
         const value = e.target.value;
         setItem(value);
