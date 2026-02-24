@@ -31,7 +31,6 @@ const Registration = lazy(() =>
 const ReservationList = lazy(() => import("./components/reservationList"));
 const OrderList = lazy(() => import("./components/OrderList"));
 
-  
 function App() {
   return (
     <BrowserRouter>
