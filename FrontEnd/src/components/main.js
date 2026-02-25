@@ -6,6 +6,9 @@ import {  Card } from "./card";
 import logo from "../images/logo.jpg";
 import star from "../images/star.png";
 import snacksImage from "../images/snacks.jpg";
+import elanjiImage from "../images/Elanji.jpeg";
+import kaypolaImage from "../images/kaypola.jpeg";
+import ullivadaImage from "../images/ullivada.webp";
 
 function HomePage() {
   return (
@@ -75,9 +78,6 @@ function HeroSection() {
 }
 
 function Main() {
-  const elanjiImagePath = "../images/elanji.jpg";
-  const kaypolaImagePath = "../images/kaypola.jpg";
-  const ullivadaImagePath = "../images/ullivada.jpg";
   return (
     <main id="highlights">
       <header>
@@ -87,9 +87,9 @@ function Main() {
         </Link>
       </header>
       <section id="specials">
-        <Card name="Elanji" description="A mix of grated coconut and dryfruits!" image={elanjiImagePath} />
-        <Card name="Kaypola" description="Fruits in an Egg cake!" image={kaypolaImagePath} />
-        <Card name="Ullivada" description="Onion with batter deep fried!" image={ullivadaImagePath} />
+        <Card name="Elanji" description="A mix of grated coconut and dryfruits!" image={elanjiImage} />
+        <Card name="Kaypola" description="Fruits in an Egg cake!" image={kaypolaImage} />
+        <Card name="Ullivada" description="Onion with batter deep fried!" image={ullivadaImage} />
       </section>
     </main>
   );
