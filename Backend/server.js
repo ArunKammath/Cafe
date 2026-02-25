@@ -85,8 +85,8 @@ app.post('/logout', (req, res) => {
     res.clearCookie('accessToken', {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
-    })
+      sameSite: 'none'
+    });
     return res.json({isLoggedIn: false, message: 'Logout successful'});
 });
 

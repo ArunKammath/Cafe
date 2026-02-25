@@ -57,6 +57,8 @@ function RightTabLogin() {
   let loggedIn = userData.username !== "";
   const navigate = useNavigate();
   const handleLogout = async () => {
+    dispatch(setUser({ userId: "", username: "", password: "", loginTime: 0 }));
+    navigate("/");
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/logout`, {}, {
         withCredentials: true
@@ -64,8 +66,6 @@ function RightTabLogin() {
     } catch (error) {
       console.error('Error in logging out:', error);
     }
-    dispatch(setUser({ userId: "", username: "", password: "", loginTime: 0}));  
-    navigate("/");
   }
   return (
     <React.Fragment>
