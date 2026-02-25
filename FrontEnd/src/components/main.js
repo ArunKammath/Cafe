@@ -155,7 +155,7 @@ function Contact() {
       <img src={logo} alt="logo" /> 
       <p>Phone: 9876543210</p>
       <p>Email: tattukkada@gmail.com</p>
-      <p>Address: somewhere, Kochi</p>
+      <p>Address: 4th Cross, MG Road, Kochi</p>
       <p>Copyright @ 2025 Tattukkada</p>
     </section>
   );
