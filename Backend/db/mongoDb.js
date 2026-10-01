@@ -10,7 +10,7 @@ const OrdersSchema = new mongoose.Schema({
 
 const Order = mongoose.model('Orders', OrdersSchema);
 
-mongoose.connect('mongodb://localhost:27017/Cafe').then(() => {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/Cafe').then(() => {
     console.log('Connected to MongoDB');
 }).catch((err) => {
     console.log('Error connecting to MongoDB', err);

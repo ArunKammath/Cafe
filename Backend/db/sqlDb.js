@@ -7,10 +7,10 @@ const { dbCommandsEnum } = require('./dbCommands');
 class SqlDb {
   constructor() {
     this.connection = mysql.createConnection({
-      host: 'localhost',     // host for connection
-      port: 3306,            // default port for mysql is 3306
-      user: 'root',          // username of the mysql connection
-      password: '1234',
+      host: process.env.MYSQL_HOST || 'localhost',     // host for connection
+      port: process.env.MYSQL_PORT || 3306,            // default port for mysql is 3306
+      user: process.env.MYSQL_USER || 'root',          // username of the mysql connection
+      password: process.env.MYSQL_PASSWORD || '1234',
       dateStrings: true      // Return dates as strings instead of Date objects (YYYY-MM-DD format)
     });
     this.connectToSqlDb();
@@ -49,10 +49,10 @@ class SqlDb {
 
   connectToDatabase() {
     this.connection = mysql.createConnection({
-        host: 'localhost',     // host for connection
-        port: 3306,            // default port for mysql is 3306
-        user: 'root',          // username of the mysql connection
-        password: '1234',
+        host: process.env.MYSQL_HOST || 'localhost',     // host for connection
+        port: process.env.MYSQL_PORT || 3306,            // default port for mysql is 3306
+        user: process.env.MYSQL_USER || 'root',          // username of the mysql connection
+        password: process.env.MYSQL_PASSWORD || '1234',
         database: 'cafe',      // database name
         dateStrings: true      // Return dates as strings instead of Date objects (YYYY-MM-DD format)
     });
