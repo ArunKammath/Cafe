@@ -38,7 +38,7 @@ function createReservationsTable ()
 
 function createMenuItemsTable ()
 {
-    let sql = `CREATE TABLE IF NOT EXISTS menuItems    (   
+    let sql = `CREATE TABLE IF NOT EXISTS menuitems    (
     itemName VARCHAR(255) PRIMARY KEY,
     itemPrice DECIMAL(10, 2) NOT NULL,
     itemImagePath VARCHAR(255) NOT NULL)`;
